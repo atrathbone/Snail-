@@ -16,7 +16,8 @@ export class CardController {
   constructor(private readonly cardService: CardService) {}
 
   @Get()
-  test() {
-    return this.cardService.create();
+  async test() {
+    const newCardId = await this.cardService.create();
+    return newCardId;
   }
 }

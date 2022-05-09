@@ -21,8 +21,8 @@ export class CardService {
       modifier: 'MOON',
       creator: testId,
     });
-    const createdCard = await newCard.save().catch((err) => Logger.log(err));
-    return createdCard;
+    const createdCard = await newCard.save()
+    return createdCard.id as string;
     Logger.log(createdCard);
   }
 }
