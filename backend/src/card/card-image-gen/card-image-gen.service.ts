@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import Jimp from 'jimp/*';
+import * as Jimp from 'jimp';;
 import { CardDataDto } from '../dto/card-data.dto';
 import { ICard } from '../card.model';
 import { ImageManipulationService } from '../image-manipulation/image-manipulation.service';
@@ -54,11 +54,7 @@ export class CardImageGenService {
     creator: 'src/image-processing-assets/fonts/small/alagard.ttf.fnt',
   };
 
-  constructor(
-    cardData: CardDataDto,
-    cardImage: Jimp,
-    private imageManipulator: ImageManipulationService,
-  ) {}
+  constructor(private imageManipulator: ImageManipulationService) {}
 
   public generateCardImage(
     cardImage: Jimp,

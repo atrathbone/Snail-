@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Value, Suit, CardType, Modifier } from '../card.model';
+import { CardDataDto } from '../dto/card-data.dto';
+import { CreateCardDto } from '../dto/create-card.dto';
 
 type SuitLookUp = {
   [key: number]: Suit;
@@ -7,7 +9,7 @@ type SuitLookUp = {
 
 @Injectable()
 export class CardDataGenService {
-  public suit(cardType: CardType): Suit {
+  private suit(cardType: CardType): Suit {
     let suitsLookup: SuitLookUp = {
       1: 'HAT',
       2: 'EVIL',
@@ -37,7 +39,7 @@ export class CardDataGenService {
     return suitType;
   }
 
-  public type(date: Date): CardType {
+  private type(date: Date): CardType {
     let cardType!: CardType;
     if (this.numberGen(0, 10, [1, 1])) {
       cardType = 'BW';
@@ -58,11 +60,11 @@ export class CardDataGenService {
     return cardType;
   }
 
-  public value(): Value {
+  private value(): Value {
     return this.numberGen(1, 10) as Value;
   }
 
-  public modifier(type: CardType) {
+  private modifier(type: CardType) {
     let modifier: Modifier = 'NONE';
     if (type === 'SUN' || type === 'MOON') {
       this.numberGen(1, 10, [1, 5]) ? (modifier = 'SUN') : (modifier = 'MOON');
@@ -83,7 +85,7 @@ export class CardDataGenService {
     }
   }
 
-  public cursedName(name: string): string {
+  private cursedName(name: string): string {
     let cursedName: string = '';
     for (let letter of name) {
       if (Math.random() < 0.5) {
@@ -93,5 +95,20 @@ export class CardDataGenService {
       }
     }
     return cursedName;
+  }
+
+  public generateCardData(createCardDto: CreateCardDto): CardDataDto {
+    let type = this.type(new Date());
+    let suit = this.suit(type);
+    let value = this.value();
+    let modifier = this.modifier(type);
+    return {
+      name: createCardDto.name,
+      type: type,
+      suit: suit,
+      value: value,
+      modifier: modifier,
+      creator: createCardDto.creator,
+    };
   }
 }

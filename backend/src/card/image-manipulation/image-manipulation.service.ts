@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import Jimp from 'jimp/*';
+import * as Jimp from 'jimp';;
 import { ICard } from '../card.model';
 
 @Injectable()

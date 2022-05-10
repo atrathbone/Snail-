@@ -32,8 +32,7 @@ export const CardSchema = new mongoose.Schema({
     required: true,
   },
   creator: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
     required: true,
   },
 });
@@ -45,5 +44,5 @@ export interface ICard {
   suit: Suit;
   value: Value;
   modifier: Modifier;
-  creator: Schema.Types.ObjectId;
+  creator: string;
 }
