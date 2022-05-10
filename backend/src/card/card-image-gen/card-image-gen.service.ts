@@ -54,22 +54,18 @@ export class CardImageGenService {
     creator: 'src/image-processing-assets/fonts/small/alagard.ttf.fnt',
   };
 
-  private cardData: CardDataDto;
-
-  private cardImage: Jimp;
-
   constructor(
     cardData: CardDataDto,
     cardImage: Jimp,
     private imageManipulator: ImageManipulationService,
-  ) {
-    this.cardData = cardData;
-    this.cardImage = cardImage;
-  }
+  ) {}
 
-  public generateCardImage(): Promise<Jimp> {
+  public generateCardImage(
+    cardImage: Jimp,
+    cardData: CardDataDto,
+  ): Promise<Jimp> {
     return new Promise((resolve, reject) => {
-      this.loadFromPaths().then((loadedImages) => {
+      this.loadFromPaths(cardData).then((loadedImages) => {
         this.imageManipulator
           .overlay(loadedImages.cardType, loadedImages.suitType)
           .then((cardPlusSuit) => {
@@ -80,7 +76,7 @@ export class CardImageGenService {
                   .overlay(cardPlusSuitPlusMod, loadedImages.valueType)
                   .then((cardPLusSuitPlusModPlusVal) => {
                     this.imageManipulator
-                      .processUploadedImage(this.cardImage)
+                      .processUploadedImage(cardImage)
                       .then((processedImg) => {
                         this.imageManipulator
                           .overlay(
@@ -94,7 +90,7 @@ export class CardImageGenService {
                               .addText(
                                 cardPlusSuitPlusModPlusValPlusMain,
                                 this.fontPaths.name,
-                                this.cardData.name,
+                                cardData.name,
                                 150,
                                 915,
                               )
@@ -106,7 +102,7 @@ export class CardImageGenService {
                                     .addText(
                                       cardPlusSuitPlusModPlusValPlusMainPlusNametxt,
                                       this.fontPaths.creator,
-                                      this.cardData.creator,
+                                      cardData.creator,
                                       470,
                                       1005,
                                     )
@@ -127,19 +123,19 @@ export class CardImageGenService {
     });
   }
 
-  private loadFromPaths(): Promise<LoadedImages> {
+  private loadFromPaths(cardData: CardDataDto): Promise<LoadedImages> {
     return new Promise((resolve, reject) => {
       this.imageManipulator
-        .loadFromPath(this.cardPaths[this.cardData.type])
+        .loadFromPath(this.cardPaths[cardData.type])
         .then((cardImg) => {
           this.imageManipulator
-            .loadFromPath(this.suitPaths[this.cardData.suit])
+            .loadFromPath(this.suitPaths[cardData.suit])
             .then((suitImg) => {
               this.imageManipulator
-                .loadFromPath(this.valuePaths[this.cardData.value])
+                .loadFromPath(this.valuePaths[cardData.value])
                 .then((valueImg) => {
                   this.imageManipulator
-                    .loadFromPath(this.modifierPaths[this.cardData.modifier])
+                    .loadFromPath(this.modifierPaths[cardData.modifier])
                     .then((modifierImg) => {
                       resolve({
                         cardType: cardImg,
