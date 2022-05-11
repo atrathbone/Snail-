@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as Jimp from 'jimp';;
 import { CardDataDto } from '../dto/card-data.dto';
-import { ICard } from '../card.model';
 import { ImageManipulationService } from '../image-manipulation/image-manipulation.service';
 
 type LoadedImages = {

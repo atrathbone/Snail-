@@ -1,20 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { UploadApiResponse } from 'cloudinary';
-import { unlink } from 'fs/promises';
 import { v2 } from 'cloudinary';
+import * as streamifier from 'streamifier';
+
 @Injectable()
 export class CloudinaryService {
-  public imageUploader(imagePath: string): Promise<UploadApiResponse> {
+  public imageUploader(image: Buffer): Promise<UploadApiResponse> {
     return new Promise((resolve, reject) => {
-      v2.uploader
-        .upload(imagePath, { resource_type: 'image' })
-        .then((response: UploadApiResponse) => {
-          unlink(imagePath);
-          resolve(response);
-        })
-        .catch((err: Error) => {
-          reject(err);
-        });
+      const cloudinaryStream = v2.uploader.upload_stream(
+        { folder: 'snail' },
+        (error, result) => {
+          resolve(result);
+          if (error) {
+            reject(error);
+          }
+        },
+      );
+
+      streamifier.createReadStream(image).pipe(cloudinaryStream);
     });
   }
 }

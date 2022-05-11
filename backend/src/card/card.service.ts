@@ -21,10 +21,6 @@ export class CardService {
     private readonly imageUploadService: ImageUploadService,
   ) {}
 
-  //testing
-  private temp =
-    '/home/atrathbone/dev/snail/backend/src/image-processing-assets/temp.jpg';
-
   public create(
     cardImage: Jimp,
     createCardDto: CreateCardDto,
@@ -37,14 +33,15 @@ export class CardService {
           const newCard = new this.cardModel(cardData);
           newCard.save().then((card) => {
             resolve(card);
-            //testing
-            this.test(img, this.temp).catch((err) => {
-              Logger.log(err);
-            });
-            //testing end
-            Logger.log(
-              `Card named '${card.name}' created by user: ${card.creator}`,
-            );
+            this.upload(img)
+              .then(() => {
+                Logger.log(
+                  `Card named '${card.name}' created by user: ${card.creator}`,
+                );
+              })
+              .catch((err) => {
+                Logger.log(err);
+              });
           });
         })
         .catch((err) => {
@@ -53,8 +50,8 @@ export class CardService {
     });
   }
 
-  private async test(img: Jimp, path: string) {
-    await img.write(path);
-    await this.imageUploadService.imageUploader(path);
+  private async upload(img: Jimp) {
+    const buffer = await img.quality(25).getBufferAsync(Jimp.MIME_JPEG);
+    await this.imageUploadService.imageUploader(buffer);
   }
 }

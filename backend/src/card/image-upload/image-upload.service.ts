@@ -4,8 +4,8 @@ import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 @Injectable()
 export class ImageUploadService {
   constructor(private readonly cloudinaryService: CloudinaryService) {}
-  public imageUploader(imagePath: string) {
-    this.cloudinaryService.imageUploader(imagePath).catch((err) => {
+  public imageUploader(image: Buffer) {
+    this.cloudinaryService.imageUploader(image).catch((err) => {
       Logger.log(err);
     });
   }
