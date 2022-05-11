@@ -17,8 +17,7 @@ import { UpdateCardDto } from './dto/update-card.dto';
 export class CardController {
   private testImagePath =
     '/home/atrathbone/dev/snail/backend/src/image-processing-assets/Testimg.jpg';
-  private temp =
-    '/home/atrathbone/dev/snail/backend/src/image-processing-assets/temp.jpg';
+
   constructor(private readonly cardService: CardService) {}
 
   @Get()
@@ -28,6 +27,6 @@ export class CardController {
       name: 'test-card',
       creator: 'testId',
     });
-    testCard.write(this.temp);
+    return testCard;
   }
 }

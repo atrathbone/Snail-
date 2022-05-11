@@ -10,6 +10,7 @@ import { CardDataDto } from './dto/card-data.dto';
 import { CardDataGenService } from './card-data-gen/card-data-gen.service';
 import { CardImageGenService } from './card-image-gen/card-image-gen.service';
 import * as Jimp from 'jimp';
+import { ImageUploadService } from './image-upload/image-upload.service';
 
 @Injectable()
 export class CardService {
@@ -17,9 +18,17 @@ export class CardService {
     @InjectModel('Card') private readonly cardModel: Model<ICard>,
     private readonly dataGenService: CardDataGenService,
     private readonly imageGenService: CardImageGenService,
+    private readonly imageUploadService: ImageUploadService,
   ) {}
 
-  public create(cardImage: Jimp, createCardDto: CreateCardDto): Promise<Jimp> {
+  //testing
+  private temp =
+    '/home/atrathbone/dev/snail/backend/src/image-processing-assets/temp.jpg';
+
+  public create(
+    cardImage: Jimp,
+    createCardDto: CreateCardDto,
+  ): Promise<CardDataDto> {
     return new Promise((resolve, reject) => {
       const cardData = this.dataGenService.generateCardData(createCardDto);
       this.imageGenService
@@ -27,7 +36,12 @@ export class CardService {
         .then((img) => {
           const newCard = new this.cardModel(cardData);
           newCard.save().then((card) => {
-            resolve(img);
+            resolve(card);
+            //testing
+            this.test(img, this.temp).catch((err) => {
+              Logger.log(err);
+            });
+            //testing end
             Logger.log(
               `Card named '${card.name}' created by user: ${card.creator}`,
             );
@@ -37,5 +51,10 @@ export class CardService {
           reject(err);
         });
     });
+  }
+
+  private async test(img: Jimp, path: string) {
+    await img.write(path);
+    await this.imageUploadService.imageUploader(path);
   }
 }
