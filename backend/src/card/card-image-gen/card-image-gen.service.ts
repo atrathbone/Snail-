@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import * as Jimp from 'jimp';;
+import * as Jimp from 'jimp';
 import { CardDataDto } from '../dto/card-data.dto';
 import { ImageManipulationService } from '../image-manipulation/image-manipulation.service';
 
@@ -55,10 +55,7 @@ export class CardImageGenService {
 
   constructor(private imageManipulator: ImageManipulationService) {}
 
-  public generateCardImage(
-    cardImage: Jimp,
-    cardData: CardDataDto,
-  ): Promise<Jimp> {
+  generateCardImage(cardImage: Jimp, cardData: CardDataDto): Promise<Jimp> {
     return new Promise((resolve, reject) => {
       this.loadFromPaths(cardData).then((loadedImages) => {
         this.imageManipulator

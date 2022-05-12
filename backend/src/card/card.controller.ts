@@ -24,7 +24,7 @@ export class CardController {
   async test() {
     const img = await Jimp.read(this.testImagePath);
     const testCard = await this.cardService.create(img, {
-      name: 'test-card',
+      name: 'Hellish-beast',
       creator: 'testId',
     });
     return testCard;

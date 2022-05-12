@@ -21,10 +21,7 @@ export class CardService {
     private readonly imageUploadService: ImageUploadService,
   ) {}
 
-  public create(
-    cardImage: Jimp,
-    createCardDto: CreateCardDto,
-  ): Promise<CardDataDto> {
+  create(cardImage: Jimp, createCardDto: CreateCardDto): Promise<CardDataDto> {
     return new Promise((resolve, reject) => {
       const cardData = this.dataGenService.generateCardData(createCardDto);
       this.imageGenService

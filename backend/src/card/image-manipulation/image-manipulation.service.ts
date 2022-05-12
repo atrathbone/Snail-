@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import * as Jimp from 'jimp';;
+import * as Jimp from 'jimp';
 import { ICard } from '../card.model';
 
 @Injectable()
 export class ImageManipulationService {
-  public processUploadedImage(image: Jimp): Promise<Jimp> {
+  processUploadedImage(image: Jimp): Promise<Jimp> {
     return new Promise((resolve, reject) => {
       Jimp.read(image)
         .then((img) => {
@@ -19,7 +19,7 @@ export class ImageManipulationService {
     });
   }
 
-  public loadFromPath(path: string): Promise<Jimp> {
+  loadFromPath(path: string): Promise<Jimp> {
     return new Promise((resolve, reject) => {
       Jimp.read(path)
         .then((jimpImg) => {
@@ -31,12 +31,7 @@ export class ImageManipulationService {
     });
   }
 
-  public overlay(
-    base: Jimp,
-    overlay: Jimp,
-    x?: number,
-    y?: number,
-  ): Promise<Jimp> {
+  overlay(base: Jimp, overlay: Jimp, x?: number, y?: number): Promise<Jimp> {
     return new Promise((resolve, reject) => {
       let xPos = 0;
       let yPos = 0;
@@ -60,7 +55,7 @@ export class ImageManipulationService {
     });
   }
 
-  public addText(
+  addText(
     base: Jimp,
     fontPath: string,
     name: string,

@@ -97,7 +97,7 @@ export class CardDataGenService {
     return cursedName;
   }
 
-  public generateCardData(createCardDto: CreateCardDto): CardDataDto {
+  generateCardData(createCardDto: CreateCardDto): CardDataDto {
     let type = this.type(new Date());
     let suit = this.suit(type);
     let value = this.value();

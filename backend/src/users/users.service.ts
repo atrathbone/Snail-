@@ -15,7 +15,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 export class UsersService {
   constructor(@InjectModel('User') private readonly userModel: Model<IUser>) {}
 
-  public async createUser(createUserDto: CreateUserDto) {
+  async createUser(createUserDto: CreateUserDto) {
     if (createUserDto.password.length < 8) {
       throw new HttpException(
         'invalid password format',
@@ -46,5 +46,13 @@ export class UsersService {
           HttpStatus.BAD_REQUEST,
         );
       });
+  }
+
+  async findByUsername(username: string) {
+    return await this.userModel.findOne({ username: username });
+  }
+
+  async validatePassword(password: string, dBPassword: string) {
+    return bcrypt.compare(password, dBPassword);
   }
 }

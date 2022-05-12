@@ -5,7 +5,7 @@ import * as streamifier from 'streamifier';
 
 @Injectable()
 export class CloudinaryService {
-  public imageUploader(image: Buffer): Promise<UploadApiResponse> {
+  imageUploader(image: Buffer): Promise<UploadApiResponse> {
     return new Promise((resolve, reject) => {
       const cloudinaryStream = v2.uploader.upload_stream(
         { folder: 'snail' },
