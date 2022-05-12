@@ -5,6 +5,8 @@ import { AppService } from './app.service';
 import { CardModule } from './card/card.module';
 import { ConfigModule } from '@nestjs/config';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -12,6 +14,8 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
     MongooseModule.forRoot('mongodb://localhost/snail'),
     CardModule,
     CloudinaryModule,
+    UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
