@@ -6,12 +6,21 @@ import {
   Patch,
   Param,
   Delete,
+  HttpStatus,
+  UseGuards,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import * as Jimp from 'jimp';
-import { Logger } from '@nestjs/common';
+import { Logger, BadRequestException, Res } from '@nestjs/common';
 import { CardService } from './card.service';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
+import { Response } from 'express';
+import { CardDto } from './dto/card.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guards';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Express } from 'express';
 
 @Controller('card')
 export class CardController {
@@ -19,14 +28,23 @@ export class CardController {
     '/home/atrathbone/dev/snail/backend/src/image-processing-assets/Testimg.jpg';
 
   constructor(private readonly cardService: CardService) {}
-
-  @Get()
-  async test() {
-    const img = await Jimp.read(this.testImagePath);
-    const testCard = await this.cardService.create(img, {
-      name: 'Hellish-beast',
-      creator: 'testId',
-    });
-    return testCard;
+  // @UseGuards(JwtAuthGuard)
+  @UseInterceptors(FileInterceptor('imgFile'))
+  @Post()
+  async test(
+    @UploadedFile() imgFile: Express.Multer.File,
+    @Body() createCardDto: CreateCardDto,
+    @Res() res: Response,
+  ) {
+    try {
+      const img = await Jimp.read(imgFile.buffer);
+      const newCard = await this.cardService.create(img, createCardDto);
+      return res.status(HttpStatus.OK).json({
+        message: 'successfully created card',
+        data: CardDto.fromEntity(newCard),
+      });
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 }

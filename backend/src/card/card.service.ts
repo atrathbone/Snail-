@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  BadRequestException,
+} from '@nestjs/common';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -21,29 +26,22 @@ export class CardService {
     private readonly imageUploadService: ImageUploadService,
   ) {}
 
-  create(cardImage: Jimp, createCardDto: CreateCardDto): Promise<CardDataDto> {
-    return new Promise((resolve, reject) => {
-      const cardData = this.dataGenService.generateCardData(createCardDto);
-      this.imageGenService
-        .generateCardImage(cardImage, cardData)
-        .then((img) => {
-          const newCard = new this.cardModel(cardData);
-          newCard.save().then((card) => {
-            resolve(card);
-            this.upload(img)
-              .then(() => {
-                Logger.log(
-                  `Card named '${card.name}' created by user: ${card.creator}`,
-                );
-              })
-              .catch((err) => {
-                Logger.log(err);
-              });
-          });
-        })
-        .catch((err) => {
-          reject(err);
-        });
+  async create(cardImage: Jimp, createCardDto: CreateCardDto) {
+    if (createCardDto.name.length > 10) {
+      throw new BadRequestException();
+    }
+    const cardData = await this.dataGenService.generateCardData(createCardDto);
+    const cardImg = await this.imageGenService.generateCardImage(
+      cardImage,
+      cardData,
+    );
+    if (!cardImg) {
+      throw new HttpException('error creating card', HttpStatus.UNAUTHORIZED);
+    }
+    await this.upload(cardImg);
+    const newCard = new this.cardModel(cardData);
+    return newCard.save().then((card) => {
+      return card;
     });
   }
 

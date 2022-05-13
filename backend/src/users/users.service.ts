@@ -22,6 +22,12 @@ export class UsersService {
         HttpStatus.BAD_REQUEST,
       );
     }
+    if (createUserDto.username.length > 10) {
+      throw new HttpException(
+        'username too long',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     const existingUser = await this.userModel.findOne({
       username: createUserDto.username,
     });
