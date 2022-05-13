@@ -103,7 +103,10 @@ export class CardDataGenService {
     let value = this.value();
     let modifier = this.modifier(type);
     return {
-      name: createCardDto.name,
+      name:
+        type === 'CURSED'
+          ? this.cursedName(createCardDto.name)
+          : createCardDto.name,
       type: type,
       suit: suit,
       value: value,
