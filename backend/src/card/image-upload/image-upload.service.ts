@@ -4,9 +4,11 @@ import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 @Injectable()
 export class ImageUploadService {
   constructor(private readonly cloudinaryService: CloudinaryService) {}
-  imageUploader(image: Buffer) {
-    this.cloudinaryService.imageUploader(image).catch((err) => {
+  async imageUploader(image: Buffer) {
+    try {
+      return await this.cloudinaryService.imageUploader(image);
+    } catch (err) {
       Logger.log(err);
-    });
+    }
   }
 }

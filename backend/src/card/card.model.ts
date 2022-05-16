@@ -35,6 +35,14 @@ export const CardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  creatorId: {
+    type: String,
+    required: true,
+  },
+  imageUrl: {
+    type: String,
+    required: true,
+  },
 });
 
 export interface ICard {
@@ -45,4 +53,6 @@ export interface ICard {
   value: Value;
   modifier: Modifier;
   creator: string;
+  creatorId: string;
+  imageUrl: string;
 }

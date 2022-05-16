@@ -7,4 +7,5 @@ export class CardDataDto {
   value: Value;
   modifier: Modifier;
   creator: string;
+  creatorId: string; 
 }

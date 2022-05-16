@@ -112,6 +112,7 @@ export class CardDataGenService {
       value: value,
       modifier: modifier,
       creator: createCardDto.creator,
+      creatorId: createCardDto.creatorId,
     };
   }
 }

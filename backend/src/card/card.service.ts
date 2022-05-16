@@ -38,8 +38,9 @@ export class CardService {
     if (!cardImg) {
       throw new HttpException('error creating card', HttpStatus.UNAUTHORIZED);
     }
-    await this.upload(cardImg);
+    const cardUrl = await this.upload(cardImg);
     const newCard = new this.cardModel(cardData);
+    newCard.imageUrl = cardUrl.url;
     return newCard.save().then((card) => {
       return card;
     });
@@ -47,6 +48,6 @@ export class CardService {
 
   private async upload(img: Jimp) {
     const buffer = await img.quality(25).getBufferAsync(Jimp.MIME_JPEG);
-    await this.imageUploadService.imageUploader(buffer);
+    return await this.imageUploadService.imageUploader(buffer);
   }
 }
