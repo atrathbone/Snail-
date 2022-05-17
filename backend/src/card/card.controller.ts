@@ -28,7 +28,7 @@ export class CardController {
     '/home/atrathbone/dev/snail/backend/src/image-processing-assets/Testimg.jpg';
 
   constructor(private readonly cardService: CardService) {}
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('imgFile'))
   @Post()
   async test(
