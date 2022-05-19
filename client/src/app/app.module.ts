@@ -7,18 +7,23 @@ import { ComponentsModule } from './components/components.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AppConfigService } from './app-config.service';
 import { CoreModule } from './core/core.module';
+import { RouterModule } from '@angular/router';
+import { AuthService } from './core/auth/auth.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    ComponentsModule,
     HttpClientModule,
+    ComponentsModule,
+    FormsModule,
+    RouterModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
   ],
-  providers: [AppConfigService],
+  providers: [AppConfigService, AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
