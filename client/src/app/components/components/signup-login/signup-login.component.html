@@ -1,15 +1,123 @@
-<mat-card>
-  <mat-card-title>Login or Signup</mat-card-title>
-  <p class="no-account">no account yet? create one [here]</p>
-  <mat-form-field appearance="outline">
-    <mat-label>Username: </mat-label>
-    <input matInput placeholder="Mr. Snail" />
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>Password: </mat-label>
-    <input matInput placeholder="********" />
-  </mat-form-field>
-  <mat-card-actions>
-    <button mat-button>Login</button>
-  </mat-card-actions>
-</mat-card>
+<div class="container">
+  <mat-card>
+    <ng-container *ngIf="loginOrSignup === 'LOG_IN'">
+      <mat-card-title>Welcome to Snail</mat-card-title>
+      <mat-card-subtitle
+        >No account yet?
+        <span class="toggle" (click)="loginOrSignup = 'SIGN_UP'"
+          >make an account</span
+        >
+      </mat-card-subtitle>
+      <form [formGroup]="loginForm">
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your email</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            placeholder="mr-snail@snail.org"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your password</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            [type]="hide ? 'password' : 'text'"
+            required
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+      </form>
+    </ng-container>
+    <ng-container *ngIf="loginOrSignup === 'SIGN_UP'">
+      <mat-card-title>Create a new account</mat-card-title>
+      <mat-card-subtitle
+        >Already got an account?
+        <span class="toggle" (click)="loginOrSignup = 'LOG_IN'"
+          >sign in here</span
+        >
+      </mat-card-subtitle>
+      <form [formGroup]="signupForm">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            placeholder="mr-snail@snail.org"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input
+            matInput
+            formControlName="name"
+            placeholder="Mr Snail"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>New password</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            [type]="hide ? 'password' : 'text'"
+            required
+          />
+
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Repeat password</mat-label>
+          <input
+            matInput
+            formControlName="confirmPassword"
+            [type]="hide ? 'password' : 'text'"
+            required
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <div class="not-matching">
+          <mat-error
+            *ngIf="signupForm.errors?.['notmatched'] && (signupForm.touched || signupForm.dirty)"
+            >Passwords do not match</mat-error
+          >
+        </div>
+      </form>
+    </ng-container>
+    <button
+      (click)="submit()"
+      mat-stroked-button
+      [disabled]="
+        loginOrSignup === 'SIGN_UP' ? !signupForm.valid : !loginForm.valid
+      "
+    >
+      {{ loginOrSignup === "LOG_IN" ? "Log in" : "Create account" }}
+    </button>
+  </mat-card>
+</div>

@@ -1,9 +1,13 @@
-.mat-card {
-  width: 200px;
-  margin: 15px;
-  padding: 30px;
-  background-color: rgb(170, 81, 170);
+.container {
+  max-width: 300px;
 }
-.no-account {
-  font-size: 0.75em;
+
+.toggle {
+  color: blueviolet;
+  cursor: pointer;
+}
+
+.not-matching {
+  font-size: smaller;
+  margin-bottom: 10px;
 }
