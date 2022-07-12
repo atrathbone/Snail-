@@ -9,48 +9,58 @@ import { confirmPasswordValidator } from 'src/app/core/auth/password.validator';
   styleUrls: ['./signup-login.component.css'],
 })
 export class SignupLoginComponent implements OnInit {
+  public badCredentials: boolean = false;
   public hide: boolean = true;
   public loginOrSignup: 'LOG_IN' | 'SIGN_UP' = 'LOG_IN';
   public loginForm = new FormGroup({
-    email: new FormControl('', [
+    username: new FormControl('', [
       Validators.required,
-      Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+      Validators.minLength(4),
     ]),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(8),
     ]),
   });
-  public signupForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    email: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-    ]),
-    password: new FormControl('', [
-      Validators.required,
-      Validators.minLength(8),
-    ]),
-    confirmPassword: new FormControl('', [Validators.required]),
-  }, {validators: confirmPasswordValidator});
+  public signupForm = new FormGroup(
+    {
+      name: new FormControl('', [Validators.required]),
+      username: new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+      ]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+      ]),
+      confirmPassword: new FormControl('', [Validators.required]),
+    },
+    { validators: confirmPasswordValidator }
+  );
 
-  constructor(private authService: AuthService) {
-  }
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.signupForm.valueChanges.subscribe((e)=>console.log(this.signupForm.errors))
+    this.loginForm.valueChanges.subscribe(() => (this.badCredentials = false));
   }
 
   submit() {
     if (this.loginOrSignup === 'LOG_IN') {
-      console.log(this.loginForm.value);
+      this.authService.login(this.loginForm.value).subscribe(
+        (res) => {
+          console.log(res);
+        },
+        (err) => {
+          this.badCredentials = true;
+        }
+      );
     }
     if (this.loginOrSignup === 'SIGN_UP') {
       console.log(this.signupForm.value);
     }
   }
 
-  // onClickLogin(credentials: Credentials) {
-  //   this.authService.login(credentials).subscribe();
-  // }
+  onClickLogin(credentials: Credentials) {
+    this.authService.login(credentials).subscribe();
+  }
 }

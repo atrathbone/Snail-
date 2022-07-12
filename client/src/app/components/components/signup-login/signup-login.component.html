@@ -10,11 +10,11 @@
       </mat-card-subtitle>
       <form [formGroup]="loginForm">
         <mat-form-field appearance="fill">
-          <mat-label>Enter your email</mat-label>
+          <mat-label>Enter your username</mat-label>
           <input
             matInput
-            formControlName="email"
-            placeholder="mr-snail@snail.org"
+            formControlName="username"
+            placeholder="m@ster$nailY2K"
             required
           />
         </mat-form-field>
@@ -26,6 +26,7 @@
             [type]="hide ? 'password' : 'text'"
             required
           />
+
           <button
             mat-icon-button
             matSuffix
@@ -36,6 +37,9 @@
             <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
           </button>
         </mat-form-field>
+        <div class="error">
+          <mat-error *ngIf="badCredentials">Incorrect details</mat-error>
+        </div>
       </form>
     </ng-container>
     <ng-container *ngIf="loginOrSignup === 'SIGN_UP'">
@@ -48,11 +52,11 @@
       </mat-card-subtitle>
       <form [formGroup]="signupForm">
         <mat-form-field appearance="fill">
-          <mat-label>Email</mat-label>
+          <mat-label>Username</mat-label>
           <input
             matInput
-            formControlName="email"
-            placeholder="mr-snail@snail.org"
+            formControlName="username"
+            placeholder="m@ster$nailY2K"
             required
           />
         </mat-form-field>
@@ -102,7 +106,7 @@
             <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
           </button>
         </mat-form-field>
-        <div class="not-matching">
+        <div class="error">
           <mat-error
             *ngIf="signupForm.errors?.['notmatched'] && (signupForm.touched || signupForm.dirty)"
             >Passwords do not match</mat-error

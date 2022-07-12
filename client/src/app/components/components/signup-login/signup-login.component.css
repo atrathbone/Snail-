@@ -7,7 +7,7 @@
   cursor: pointer;
 }
 
-.not-matching {
+.error {
   font-size: smaller;
   margin-bottom: 10px;
 }
