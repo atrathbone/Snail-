@@ -1,0 +1,12 @@
+<mat-toolbar class="mat-elevation-z5">
+  <div class="header-container">
+    <button *ngIf="isLoggedIn" mat-icon-button (click)="toggle.emit()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div class="logout">
+      <button *ngIf="isLoggedIn" (click)="logOut()" mat-stroked-button>
+        Log out
+      </button>
+    </div>
+  </div>
+</mat-toolbar>

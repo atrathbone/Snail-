@@ -1,0 +1,130 @@
+<div class="container">
+  <mat-card>
+    <ng-container *ngIf="loginOrSignup === 'LOG_IN'">
+      <mat-card-title>Welcome to Snail</mat-card-title>
+      <mat-card-subtitle
+        >No account yet?
+        <span class="toggle" (click)="loginOrSignup = 'SIGN_UP'"
+          >make an account</span
+        >
+      </mat-card-subtitle>
+      <form [formGroup]="loginForm">
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your username</mat-label>
+          <input
+            matInput
+            formControlName="username"
+            placeholder="m@ster$nailY2K"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your password</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            [type]="hide ? 'password' : 'text'"
+            required
+          />
+
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <div class="error">
+          <mat-error *ngIf="badCredentials">Incorrect details</mat-error>
+        </div>
+      </form>
+    </ng-container>
+    <ng-container *ngIf="loginOrSignup === 'SIGN_UP'">
+      <mat-card-title>Create a new account</mat-card-title>
+      <mat-card-subtitle
+        >Already got an account?
+        <span class="toggle" (click)="loginOrSignup = 'LOG_IN'"
+          >sign in here</span
+        >
+      </mat-card-subtitle>
+      <form [formGroup]="signupForm">
+        <mat-form-field appearance="fill">
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            formControlName="username"
+            placeholder="m@ster$nailY2K"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input
+            matInput
+            formControlName="name"
+            placeholder="Mr Snail"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>New password</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            [type]="hide ? 'password' : 'text'"
+            required
+          />
+
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Repeat password</mat-label>
+          <input
+            matInput
+            formControlName="confirmPassword"
+            [type]="hide ? 'password' : 'text'"
+            required
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <div class="error">
+          <mat-error
+            *ngIf="signupForm.errors?.['notmatched'] && (signupForm.touched || signupForm.dirty)"
+            >Passwords do not match</mat-error
+          >
+        </div>
+        <div class="error">
+          <mat-error *ngIf="cantCreate">Cannot create account</mat-error>
+        </div>
+      </form>
+    </ng-container>
+    <button
+      (click)="submit()"
+      mat-stroked-button
+      [disabled]="
+        loginOrSignup === 'SIGN_UP' ? !signupForm.valid : !loginForm.valid
+      "
+    >
+      {{ loginOrSignup === "LOG_IN" ? "Log in" : "Create account" }}
+    </button>
+  </mat-card>
+</div>

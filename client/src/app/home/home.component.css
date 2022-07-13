@@ -1,0 +1,36 @@
+.sidenav {
+	display: flex;
+	flex-direction: column;
+	width: 200px;
+}
+
+.main-content {
+	display: flex;
+	flex-direction: column;
+	overflow: auto;
+	padding: 15px;
+}
+
+.side-nav-menu {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.logo-container {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.active {
+	background-color: #f0f0f0;
+}
+
+.side-nav-menu button {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 10px;
+	width: 100%;
+	text-align: left;
+}
