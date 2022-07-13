@@ -23,10 +23,7 @@ export class UsersService {
       );
     }
     if (createUserDto.username.length > 10) {
-      throw new HttpException(
-        'username too long',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('username too long', HttpStatus.BAD_REQUEST);
     }
     const existingUser = await this.userModel.findOne({
       username: createUserDto.username,
@@ -56,6 +53,10 @@ export class UsersService {
 
   async findByUsername(username: string) {
     return await this.userModel.findOne({ username: username });
+  }
+
+  async findByUserId(userId: string) {
+    return await this.userModel.findOne({ id: userId });
   }
 
   async validatePassword(password: string, dBPassword: string) {

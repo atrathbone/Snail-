@@ -1,0 +1,45 @@
+<div class="container">
+  <mat-card>
+    <ng-container *ngIf="card">
+      <app-single-card [cardUrl]="card"></app-single-card>
+    </ng-container>
+    <ng-container *ngIf="isLoading">
+      <h1>LOADING LOL</h1>
+    </ng-container>
+    <ng-container *ngIf="!isLoading && !card">
+      <mat-card-title>Create a card</mat-card-title>
+      <mat-card-subtitle
+        >Upload an image to be converted in to a Snail card</mat-card-subtitle
+      >
+      <form [formGroup]="form">
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input
+            matInput
+            formControlName="cardname"
+            placeholder="Name your card"
+            required
+          />
+        </mat-form-field>
+        <button mat-stroked-button (click)="fileInput.click()" color="primary">
+          <mat-icon>add</mat-icon>Upload image
+        </button>
+        <input
+          #fileInput
+          hidden
+          type="file"
+          accept="image/png, image/jpeg"
+          (change)="setFile($event)"
+        />
+        <mat-card-content>{{ file?.name }}</mat-card-content>
+      </form>
+      <button
+        (click)="uploadFile()"
+        mat-stroked-button
+        [disabled]="!file || !form.valid"
+      >
+        Generate card
+      </button>
+    </ng-container>
+  </mat-card>
+</div>

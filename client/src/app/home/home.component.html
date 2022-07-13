@@ -1,17 +1,26 @@
 <mat-sidenav-container fullscreen>
-	<mat-sidenav #sidenav mode="side" [fixedInViewport]="true" [opened]="false" class="sidenav mat-elevation-z5">
-		<div class="side-nav-menu">
-			<!-- <div class="logo-container">
+  <mat-sidenav
+    #sidenav
+    mode="side"
+    [fixedInViewport]="true"
+    [opened]="false"
+    class="sidenav mat-elevation-z5"
+  >
+    <div class="side-nav-menu">
+      <!-- <div class="logo-container">
 				<span><img routerLink="/" src="assets/images/logo.png" alt="logo" /></span>
 			</div> -->
-			<button mat-menu-item routerLinkActive="active" routerLink="/">
-				<span>Test</span>
-			</button>
-		</div>
-	</mat-sidenav>
-	<mat-sidenav-content>
-		<app-header (toggle)="toggle.next($event)"></app-header>
-		<main class="main-content"> <router-outlet></router-outlet> </main
-	></mat-sidenav-content>
+      <button mat-menu-item routerLinkActive="active" routerLink="dashboard">
+        <span>Home</span>
+      </button>
+      <button mat-menu-item routerLinkActive="active" routerLink="createcard">
+        <span>Create a card</span>
+      </button>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-header (toggle)="toggle.next($event)"></app-header>
+    <main class="main-content"><router-outlet></router-outlet></main
+  ></mat-sidenav-content>
 </mat-sidenav-container>
 <mat-menu></mat-menu>
