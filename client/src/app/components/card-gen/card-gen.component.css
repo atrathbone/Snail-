@@ -1,0 +1,8 @@
+.container {
+  max-width: 300px;
+}
+
+.error {
+  font-size: smaller;
+  margin-bottom: 10px;
+}

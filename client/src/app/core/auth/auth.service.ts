@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppConfigService } from '../../app-config.service';
-import { map, shareReplay, Subject, tap } from 'rxjs';
+import { shareReplay, Subject, tap } from 'rxjs';
 import * as moment from 'moment';
+import jwt_decode from 'jwt-decode';
 
 export type Credentials = {
   username: string;
@@ -45,6 +46,12 @@ export class AuthService {
     const loggedIn = moment().isBefore(this.getExpiration());
     this.isLoggedIn$.next(loggedIn);
     return loggedIn;
+  }
+
+  public getCurrentUser() {
+    const jwt = localStorage.getItem('id_token');
+    const decoded: any = jwt ? jwt_decode(jwt) : undefined;
+    return decoded.userId;
   }
 
   getExpiration() {

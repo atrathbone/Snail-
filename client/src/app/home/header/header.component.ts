@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/core/auth/auth.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  public isLoggedIn = false;
+  public isLoggedIn = this.authService.isLoggedIn();
   @Output()
   toggle = new EventEmitter();
   constructor(private authService: AuthService, private router: Router) {}

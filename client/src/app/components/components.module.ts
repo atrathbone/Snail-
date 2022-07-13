@@ -7,9 +7,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CardGenComponent } from './card-gen/card-gen.component';
 
 @NgModule({
-  declarations: [SignupLoginComponent],
+  declarations: [SignupLoginComponent, CardGenComponent],
   imports: [
     CommonModule,
     MatCardModule,
@@ -19,6 +20,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
     ReactiveFormsModule,
   ],
-  exports: [SignupLoginComponent],
+  exports: [SignupLoginComponent, CardGenComponent],
 })
 export class ComponentsModule {}
