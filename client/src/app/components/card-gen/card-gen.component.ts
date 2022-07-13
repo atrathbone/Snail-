@@ -38,7 +38,7 @@ export class CardGenComponent implements OnInit {
         next: (res: any) => {
           const card: Card = res.data;
           this.card = card.imageUrl;
-          this.form.value.cardname = '';
+          this.form.patchValue({ cardname: '' });
           this.file = undefined;
           this.isLoading = false;
         },
@@ -46,5 +46,9 @@ export class CardGenComponent implements OnInit {
           this.cantCreate = true;
         },
       });
+  }
+
+  public createAnother() {
+    this.card = undefined;
   }
 }

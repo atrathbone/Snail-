@@ -72,7 +72,6 @@ export class SignupLoginComponent implements OnInit {
           this.cantCreate = true;
         },
       });
-      console.log(this.signupForm.value);
     }
   }
 

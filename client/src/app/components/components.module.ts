@@ -8,9 +8,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardGenComponent } from './card-gen/card-gen.component';
+import { SingleCardComponent } from './single-card/single-card.component';
 
 @NgModule({
-  declarations: [SignupLoginComponent, CardGenComponent],
+  declarations: [SignupLoginComponent, CardGenComponent, SingleCardComponent],
   imports: [
     CommonModule,
     MatCardModule,

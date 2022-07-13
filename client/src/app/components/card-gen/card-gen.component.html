@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
     <ng-container *ngIf="card">
-      <img [src]="card" alt="card">
+      <app-single-card [cardUrl]="card"></app-single-card>
     </ng-container>
     <ng-container *ngIf="isLoading">
       <h1>LOADING LOL</h1>
