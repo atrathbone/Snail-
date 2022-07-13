@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppConfigService } from '../../app-config.service';
-import { map, shareReplay, tap } from 'rxjs';
+import { map, shareReplay, Subject, tap } from 'rxjs';
 import * as moment from 'moment';
 
 export type Credentials = {
@@ -17,6 +17,8 @@ export class AuthService {
     private httpClient: HttpClient,
     private appConfigService: AppConfigService
   ) {}
+
+  public isLoggedIn$ = new Subject<boolean>();
 
   private backendUrl = this.appConfigService.getBackendUrl();
 
@@ -36,14 +38,13 @@ export class AuthService {
   public logout() {
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    this.isLoggedIn$.next(false);
   }
 
   public isLoggedIn() {
-    return moment().isBefore(this.getExpiration());
-  }
-
-  isLoggedOut() {
-    return !this.isLoggedIn();
+    const loggedIn = moment().isBefore(this.getExpiration());
+    this.isLoggedIn$.next(loggedIn);
+    return loggedIn;
   }
 
   getExpiration() {
@@ -52,7 +53,7 @@ export class AuthService {
       const expiresAt = JSON.parse(expiration);
       return moment(expiresAt);
     } else {
-      return undefined;
+      return null;
     }
   }
 }

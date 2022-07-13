@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ApiService } from 'src/app/core/api/api.service';
 import { AuthService, Credentials } from 'src/app/core/auth/auth.service';
 import { confirmPasswordValidator } from 'src/app/core/auth/password.validator';
 
@@ -9,7 +11,8 @@ import { confirmPasswordValidator } from 'src/app/core/auth/password.validator';
   styleUrls: ['./signup-login.component.css'],
 })
 export class SignupLoginComponent implements OnInit {
-  public badCredentials: boolean = false;
+  public badCredentials = false;
+  public cantCreate = false;
   public hide: boolean = true;
   public loginOrSignup: 'LOG_IN' | 'SIGN_UP' = 'LOG_IN';
   public loginForm = new FormGroup({
@@ -28,6 +31,7 @@ export class SignupLoginComponent implements OnInit {
       username: new FormControl('', [
         Validators.required,
         Validators.minLength(4),
+        Validators.maxLength(10),
       ]),
       password: new FormControl('', [
         Validators.required,
@@ -38,7 +42,11 @@ export class SignupLoginComponent implements OnInit {
     { validators: confirmPasswordValidator }
   );
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private apiService: ApiService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loginForm.valueChanges.subscribe(() => (this.badCredentials = false));
@@ -46,16 +54,24 @@ export class SignupLoginComponent implements OnInit {
 
   submit() {
     if (this.loginOrSignup === 'LOG_IN') {
-      this.authService.login(this.loginForm.value).subscribe(
-        (res) => {
-          console.log(res);
+      this.authService.login(this.loginForm.value).subscribe({
+        next: () => {
+          this.router.navigate(['']);
         },
-        (err) => {
+        error: () => {
           this.badCredentials = true;
-        }
-      );
+        },
+      });
     }
     if (this.loginOrSignup === 'SIGN_UP') {
+      this.apiService.createUser(this.signupForm.value).subscribe({
+        next: () => {
+          this.loginOrSignup = 'LOG_IN';
+        },
+        error: () => {
+          this.cantCreate = true;
+        },
+      });
       console.log(this.signupForm.value);
     }
   }

@@ -112,6 +112,9 @@
             >Passwords do not match</mat-error
           >
         </div>
+        <div class="error">
+          <mat-error *ngIf="cantCreate">Cannot create account</mat-error>
+        </div>
       </form>
     </ng-container>
     <button
