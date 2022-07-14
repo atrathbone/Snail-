@@ -15,7 +15,6 @@ export class SingleCardComponent implements OnInit {
   ngOnInit(): void {}
 
   public imgLoaded() {
-    console.log('image')
     this.loaded = true;
   }
 }

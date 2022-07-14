@@ -46,6 +46,10 @@ export class CardService {
     });
   }
 
+  async listCards(){
+    return await this.cardModel.find({}).exec()
+  }
+
   private async upload(img: Jimp) {
     const buffer = await img.quality(25).getBufferAsync(Jimp.MIME_JPEG);
     return await this.imageUploadService.imageUploader(buffer);

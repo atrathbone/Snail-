@@ -1,0 +1,17 @@
+.full {
+  width: 100%;
+}
+
+img {
+  width: 30px;
+  margin: 5px;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: auto;
+    max-height: 400px;
+}
+

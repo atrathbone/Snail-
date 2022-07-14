@@ -1,3 +1,4 @@
+div
 <mat-sidenav-container fullscreen>
   <mat-sidenav
     #sidenav
@@ -7,14 +8,14 @@
     class="sidenav mat-elevation-z5"
   >
     <div class="side-nav-menu">
-      <!-- <div class="logo-container">
-				<span><img routerLink="/" src="assets/images/logo.png" alt="logo" /></span>
-			</div> -->
       <button mat-menu-item routerLinkActive="active" routerLink="dashboard">
         <span>Home</span>
       </button>
       <button mat-menu-item routerLinkActive="active" routerLink="createcard">
         <span>Create a card</span>
+      </button>
+      <button mat-menu-item routerLinkActive="active" routerLink="browsecards">
+        <span>Browse cards</span>
       </button>
     </div>
   </mat-sidenav>

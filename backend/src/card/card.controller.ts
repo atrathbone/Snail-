@@ -55,4 +55,19 @@ export class CardController {
       throw new BadRequestException(error.message);
     }
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  async listCards(@Res() res: Response) {
+    try {
+      const cards = await this.cardService.listCards();
+      return res.status(HttpStatus.OK).json({
+        data: cards.map((card) => {
+          return CardDto.fromEntity(card);
+        }),
+      });
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
 }

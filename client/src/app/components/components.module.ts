@@ -9,9 +9,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardGenComponent } from './card-gen/card-gen.component';
 import { SingleCardComponent } from './single-card/single-card.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatTableModule } from '@angular/material/table';
+import { CardBrowserTableComponent } from './card-browser-table/card-browser-table.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
-  declarations: [SignupLoginComponent, CardGenComponent, SingleCardComponent],
+  declarations: [
+    SignupLoginComponent,
+    CardGenComponent,
+    SingleCardComponent,
+    CardBrowserTableComponent,
+  ],
   imports: [
     CommonModule,
     MatCardModule,
@@ -20,7 +29,10 @@ import { SingleCardComponent } from './single-card/single-card.component';
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
+    MatGridListModule,
+    MatTableModule,
+    MatPaginatorModule,
   ],
-  exports: [SignupLoginComponent, CardGenComponent],
+  exports: [SignupLoginComponent, CardGenComponent, CardBrowserTableComponent],
 })
 export class ComponentsModule {}
