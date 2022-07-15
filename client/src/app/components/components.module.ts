@@ -17,6 +17,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CardBrowserDialogComponent } from './card-browser-dialog/card-browser-dialog.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms';
+import { AddToCollectionDialogComponent } from './add-to-collection-dialog/add-to-collection-dialog.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,7 @@ import { MatChipsModule } from '@angular/material/chips';
     SingleCardComponent,
     CardBrowserTableComponent,
     CardBrowserDialogComponent,
+    AddToCollectionDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -40,6 +44,8 @@ import { MatChipsModule } from '@angular/material/chips';
     MatDialogModule,
     MatSelectModule,
     MatChipsModule,
+    MatCheckboxModule,
+    FormsModule,
   ],
   exports: [
     SignupLoginComponent,

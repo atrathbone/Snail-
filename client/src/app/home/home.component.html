@@ -1,10 +1,9 @@
-div
 <mat-sidenav-container fullscreen>
   <mat-sidenav
     #sidenav
     mode="side"
     [fixedInViewport]="true"
-    [opened]="false"
+    [opened]="loggedIn$ | async"
     class="sidenav mat-elevation-z5"
   >
     <div class="side-nav-menu">

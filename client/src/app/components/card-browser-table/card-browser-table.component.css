@@ -7,12 +7,16 @@ img {
   margin: 5px;
 }
 
-.container{
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: auto;
-    max-height: 350px;
+.container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: auto;
+  max-height: 350px;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 table {
@@ -23,25 +27,33 @@ th {
   background-color: plum;
 }
 
-.mat-option img{
+.mat-option img {
   margin-top: 25px;
 }
 
-.filters{
+.filters {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  gap: 3px;
 }
 
-.left-filters{
+.left-filters {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   gap: 3px;
 }
 
-.right-filters{
+.right-filters {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+}
+
+.bottom-controls{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 10px;
 }
