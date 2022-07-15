@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppConfigService } from '../../app-config.service';
-import { shareReplay } from 'rxjs';
+import { map, shareReplay } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { Card } from '../Models/card.model';
 
 export type NewUser = {
   name: string;
@@ -38,7 +39,12 @@ export class ApiService {
     formData.append('imgFile', newCard.file);
     formData.append('creatorId', creatorId);
     formData.append('name', newCard.name);
-
     return this.httpClient.post(`${this.backendUrl}/card`, formData);
+  }
+
+  public listCards() {
+    return this.httpClient
+      .get(`${this.backendUrl}/card`)
+      .pipe(map((res: any) => res.data));
   }
 }

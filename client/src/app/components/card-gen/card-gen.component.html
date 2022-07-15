@@ -2,6 +2,11 @@
   <mat-card>
     <ng-container *ngIf="card">
       <app-single-card [cardUrl]="card"></app-single-card>
+      <mat-card-actions>
+        <button mat-stroked-button (click)="createAnother()">
+          Create another?
+        </button>
+      </mat-card-actions>
     </ng-container>
     <ng-container *ngIf="isLoading">
       <h1>LOADING LOL</h1>
@@ -21,7 +26,7 @@
             required
           />
         </mat-form-field>
-        <button mat-stroked-button (click)="fileInput.click()" color="primary">
+        <button mat-stroked-button (click)="fileInput.click()">
           <mat-icon>add</mat-icon>Upload image
         </button>
         <input
@@ -33,13 +38,15 @@
         />
         <mat-card-content>{{ file?.name }}</mat-card-content>
       </form>
-      <button
-        (click)="uploadFile()"
-        mat-stroked-button
-        [disabled]="!file || !form.valid"
-      >
-        Generate card
-      </button>
+      <mat-card-actions>
+        <button
+          (click)="uploadFile()"
+          mat-stroked-button
+          [disabled]="!file || !form.valid"
+        >
+          Generate card
+        </button>
+      </mat-card-actions>
     </ng-container>
   </mat-card>
 </div>
