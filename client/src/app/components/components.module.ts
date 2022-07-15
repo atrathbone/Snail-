@@ -13,6 +13,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTableModule } from '@angular/material/table';
 import { CardBrowserTableComponent } from './card-browser-table/card-browser-table.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CardBrowserDialogComponent } from './card-browser-dialog/card-browser-dialog.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     CardGenComponent,
     SingleCardComponent,
     CardBrowserTableComponent,
+    CardBrowserDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -32,7 +35,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatGridListModule,
     MatTableModule,
     MatPaginatorModule,
+    MatDialogModule,
   ],
-  exports: [SignupLoginComponent, CardGenComponent, CardBrowserTableComponent],
+  exports: [SignupLoginComponent, CardGenComponent, CardBrowserTableComponent, CardBrowserDialogComponent],
 })
 export class ComponentsModule {}
