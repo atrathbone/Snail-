@@ -56,7 +56,7 @@ export class UsersService {
   }
 
   async findByUserId(userId: string) {
-    return await this.userModel.findOne({ id: userId });
+    return await this.userModel.findById(userId);
   }
 
   async validatePassword(password: string, dBPassword: string) {
