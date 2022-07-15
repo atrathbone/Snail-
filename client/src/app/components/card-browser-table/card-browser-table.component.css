@@ -3,7 +3,7 @@
 }
 
 img {
-  width: 30px;
+  width: 25px;
   margin: 5px;
 }
 
@@ -12,6 +12,36 @@ img {
     flex-direction: column;
     position: relative;
     overflow: auto;
-    max-height: 400px;
+    max-height: 350px;
 }
 
+table {
+  background-color: cyan;
+}
+
+th {
+  background-color: plum;
+}
+
+.mat-option img{
+  margin-top: 25px;
+}
+
+.filters{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.left-filters{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 3px;
+}
+
+.right-filters{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}

@@ -15,6 +15,8 @@ import { CardBrowserTableComponent } from './card-browser-table/card-browser-tab
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CardBrowserDialogComponent } from './card-browser-dialog/card-browser-dialog.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,14 @@ import { CardBrowserDialogComponent } from './card-browser-dialog/card-browser-d
     MatTableModule,
     MatPaginatorModule,
     MatDialogModule,
+    MatSelectModule,
+    MatChipsModule,
   ],
-  exports: [SignupLoginComponent, CardGenComponent, CardBrowserTableComponent, CardBrowserDialogComponent],
+  exports: [
+    SignupLoginComponent,
+    CardGenComponent,
+    CardBrowserTableComponent,
+    CardBrowserDialogComponent,
+  ],
 })
 export class ComponentsModule {}
