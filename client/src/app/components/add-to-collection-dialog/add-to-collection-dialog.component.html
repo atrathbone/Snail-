@@ -10,12 +10,12 @@
       <mat-label>Name</mat-label>
       <input
         matInput
-        formControlName="collectionname"
+        [formControl]="collectionname"
         placeholder="Name your collection"
         required
       />
     </mat-form-field>
-    <button mat-stroked-button>
+    <button (click)="addToNewCollection(data.selectedCards)" mat-stroked-button>
       <mat-icon>add</mat-icon>
       Create new
     </button>
@@ -26,6 +26,9 @@
       again
     </h1>
   </ng-container>
+  <div class="error">
+    <mat-error *ngIf="error">{{ error }}</mat-error>
+  </div>
   <div mat-dialog-actions>
     <button mat-button mat-dialog-close>Cancel</button>
   </div>

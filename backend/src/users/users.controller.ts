@@ -6,10 +6,13 @@ import {
   Logger,
   Res,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { Response } from 'express';
+import { AddCollectionDto } from './dto/add-collection.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guards';
 
 @Controller('users')
 export class UsersController {
@@ -22,6 +25,22 @@ export class UsersController {
       return res
         .status(HttpStatus.OK)
         .json({ message: 'new User successfully created' });
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  @Post('collection')
+  @UseGuards(JwtAuthGuard)
+  async addCollection(
+    @Body() addCollectionDto: AddCollectionDto,
+    @Res() res: Response,
+  ) {
+    try {
+      const updateResponse = this.usersService.addCollection(addCollectionDto);
+      return res
+        .status(HttpStatus.OK)
+        .json({ message: 'added new collection' });
     } catch (error) {
       throw new BadRequestException(error.message);
     }

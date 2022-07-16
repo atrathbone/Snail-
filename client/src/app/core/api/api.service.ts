@@ -16,6 +16,12 @@ export type NewCard = {
   file: File;
 };
 
+export type NewCollection = {
+  name: string;
+  cards: string[];
+  userId?: string;
+};
+
 @Injectable({
   providedIn: 'root',
 })
@@ -40,6 +46,15 @@ export class ApiService {
     formData.append('creatorId', creatorId);
     formData.append('name', newCard.name);
     return this.httpClient.post(`${this.backendUrl}/card`, formData);
+  }
+
+  public addNewCollection(newCollection: NewCollection) {
+    const creatorId = this.authService.getCurrentUser();
+    newCollection.userId = creatorId;
+    return this.httpClient.post(
+      `${this.backendUrl}/users/collection`,
+      newCollection
+    );
   }
 
   public listCards() {

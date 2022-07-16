@@ -8,12 +8,17 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcryptjs';
 import { Model } from 'mongoose';
-import { IUser } from './user.model';
+import { ICollection, IUser } from './user.model';
 import { CreateUserDto } from './dto/create-user.dto';
+import { AddCollectionDto } from './dto/add-collection.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel('User') private readonly userModel: Model<IUser>) {}
+  constructor(
+    @InjectModel('User') private readonly userModel: Model<IUser>,
+    @InjectModel('Collection')
+    private readonly collectionModel: Model<ICollection>,
+  ) {}
 
   async createUser(createUserDto: CreateUserDto) {
     if (createUserDto.password.length < 8) {
@@ -49,6 +54,31 @@ export class UsersService {
           HttpStatus.BAD_REQUEST,
         );
       });
+  }
+
+  async addCollection(addCollectionDto: AddCollectionDto) {
+    if (addCollectionDto.cards.length > 45) {
+      throw new HttpException(
+        'Collection exceeds maximum (45 cards)',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    const newCollection = await new this.collectionModel({
+      name: addCollectionDto.name,
+      cards: addCollectionDto.cards,
+    });
+    const updatedUser = await this.userModel.findByIdAndUpdate(
+      { _id: addCollectionDto.userId },
+      { $push: { collections: newCollection } },
+      { new: true },
+    );
+    return updatedUser.save().catch((err) => {
+      Logger.log(err);
+      throw new HttpException(
+        'Error adding collection',
+        HttpStatus.BAD_REQUEST,
+      );
+    });
   }
 
   async findByUsername(username: string) {

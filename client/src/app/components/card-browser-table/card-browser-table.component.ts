@@ -152,6 +152,9 @@ export class CardBrowserTableComponent {
       const dialogRef = this.dialog.open(AddToCollectionDialogComponent, {
         data: { selectedCards: toCollect },
       });
+      dialogRef.afterClosed().subscribe((result) => {
+        this.checked = {};
+      });
     }
   }
 }
