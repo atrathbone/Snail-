@@ -40,34 +40,47 @@ export class CardController {
     @Body() createCardDto: CreateCardDto,
     @Res() res: Response,
   ) {
-    try {
-      const creator = await this.usersService.findByUserId(
-        createCardDto.creatorId,
-      );
-      createCardDto.creator = creator.username;
-      const img = await Jimp.read(imgFile.buffer);
-      const newCard = await this.cardService.create(img, createCardDto);
-      return res.status(HttpStatus.OK).json({
-        message: 'successfully created card',
-        data: CardDto.fromEntity(newCard),
-      });
-    } catch (error) {
-      throw new BadRequestException(error.message);
+    const creator = await this.usersService.findByUserId(
+      createCardDto.creatorId,
+    );
+    if (!creator) {
+      return res
+        .status(HttpStatus.BAD_REQUEST)
+        .json({ message: 'User not found' });
     }
+    createCardDto.creator = creator.username;
+    const img = await Jimp.read(imgFile.buffer);
+    await this.cardService
+      .create(img, createCardDto)
+      .then((newCard) => {
+        return res.status(HttpStatus.OK).json({
+          message: 'successfully created card',
+          data: CardDto.fromEntity(newCard),
+        });
+      })
+      .catch((error) => {
+        return res.status(HttpStatus.OK).json({
+          message: error.message,
+        });
+      });
   }
 
   @UseGuards(JwtAuthGuard)
   @Get()
   async listCards(@Res() res: Response) {
-    try {
-      const cards = await this.cardService.listCards();
-      return res.status(HttpStatus.OK).json({
-        data: cards.map((card) => {
-          return CardDto.fromEntity(card);
-        }),
+    const cards = await this.cardService
+      .listCards()
+      .then((cards) => {
+        return res.status(HttpStatus.OK).json({
+          data: cards.map((card) => {
+            return CardDto.fromEntity(card);
+          }),
+        });
+      })
+      .catch((error) => {
+        return res
+          .status(HttpStatus.BAD_REQUEST)
+          .json({ message: error.message });
       });
-    } catch (error) {
-      throw new BadRequestException(error.message);
-    }
   }
 }

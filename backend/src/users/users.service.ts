@@ -11,6 +11,7 @@ import { Model } from 'mongoose';
 import { ICollection, IUser } from './user.model';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AddCollectionDto } from './dto/add-collection.dto';
+import { UpdateCollectionDto } from './dto/update-collection.dto';
 
 @Injectable()
 export class UsersService {
@@ -79,6 +80,26 @@ export class UsersService {
         HttpStatus.BAD_REQUEST,
       );
     });
+  }
+
+  async updateCollection(updateCollectionDto: UpdateCollectionDto) {
+    return await this.userModel
+      .updateOne(
+        {
+          _id: updateCollectionDto.userId,
+          'collections._id': updateCollectionDto.collectionId,
+        },
+        {
+          $addToSet: { 'collections.$.cards': updateCollectionDto.cards },
+        },
+      )
+      .catch((err) => {
+        Logger.log(err);
+        throw new HttpException(
+          'Error updating collection',
+          HttpStatus.BAD_REQUEST,
+        );
+      });
   }
 
   async findByUsername(username: string) {
