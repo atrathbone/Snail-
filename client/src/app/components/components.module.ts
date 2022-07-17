@@ -20,6 +20,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { AddToCollectionDialogComponent } from './add-to-collection-dialog/add-to-collection-dialog.component';
+import { ExistingCollectionsDialogComponent } from './existing-collections-dialog/existing-collections-dialog.component';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { AddToCollectionDialogComponent } from './add-to-collection-dialog/add-t
     CardBrowserTableComponent,
     CardBrowserDialogComponent,
     AddToCollectionDialogComponent,
+    ExistingCollectionsDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -46,6 +49,7 @@ import { AddToCollectionDialogComponent } from './add-to-collection-dialog/add-t
     MatChipsModule,
     MatCheckboxModule,
     FormsModule,
+    MatListModule,
   ],
   exports: [
     SignupLoginComponent,

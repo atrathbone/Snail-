@@ -1,4 +1,4 @@
-import { CardType, Suit, Value, Modifier, ICard } from '../card.model';
+import { ICard } from '../card.model';
 import { CardDataDto } from './card-data.dto';
 
 export class CardDto extends CardDataDto {

@@ -15,6 +15,7 @@ type DialogData = {
   styleUrls: ['./add-to-collection-dialog.component.css'],
 })
 export class AddToCollectionDialogComponent {
+  public createNewOrAdd: 'CREATE_NEW' | 'ADD' = 'CREATE_NEW';
   public error: string | undefined = undefined;
   public collectionname = new FormControl();
   constructor(
@@ -30,10 +31,9 @@ export class AddToCollectionDialogComponent {
       .subscribe({
         next: () => {
           this.dialogRef.close();
-
         },
         error: () => {
-          this.error = 'Error creating new Collection'
+          this.error = 'Error creating new Collection';
         },
       });
   }

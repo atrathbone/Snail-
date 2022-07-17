@@ -1,11 +1,19 @@
 <div class="container">
-  <ng-container *ngIf="data.selectedCards.length <= 45">
+  <ng-container
+    *ngIf="data.selectedCards.length <= 45 && createNewOrAdd === 'CREATE_NEW'"
+  >
     <h1 mat-dialog-title>
       Add {{ data.selectedCards.length }} card{{
         data.selectedCards.length > 1 ? "s" : ""
       }}
       to new collection ?
     </h1>
+    <p>
+      (Or add to an
+      <span (click)="createNewOrAdd = 'ADD'" class="toggle"
+        >existing collection</span
+      >)
+    </p>
     <mat-form-field appearance="fill">
       <mat-label>Name</mat-label>
       <input
@@ -25,6 +33,14 @@
       Collections can have a maximum of 45 cards. Edit your selection and try
       again
     </h1>
+  </ng-container>
+  <ng-container
+    *ngIf="data.selectedCards.length <= 45 && createNewOrAdd === 'ADD'"
+  >
+    <app-existing-collections-dialog
+      (updated)="dialogRef.close()"
+      [cards]="data.selectedCards"
+    ></app-existing-collections-dialog>
   </ng-container>
   <div class="error">
     <mat-error *ngIf="error">{{ error }}</mat-error>

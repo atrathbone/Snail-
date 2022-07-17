@@ -51,6 +51,7 @@ export interface IUser {
   name: string;
   username: string;
   password: string;
+  collections?: ICollection[] 
   createdAt: Date;
   updatedAt: Date;
 }

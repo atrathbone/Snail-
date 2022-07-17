@@ -3,19 +3,15 @@ import {
   Get,
   Post,
   Body,
-  Patch,
-  Param,
-  Delete,
   HttpStatus,
   UseGuards,
   UseInterceptors,
   UploadedFile,
 } from '@nestjs/common';
 import * as Jimp from 'jimp';
-import { Logger, BadRequestException, Res } from '@nestjs/common';
+import { Res } from '@nestjs/common';
 import { CardService } from './card.service';
 import { CreateCardDto } from './dto/create-card.dto';
-import { UpdateCardDto } from './dto/update-card.dto';
 import { Response } from 'express';
 import { CardDto } from './dto/card.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guards';
@@ -25,9 +21,6 @@ import { UsersService } from 'src/users/users.service';
 
 @Controller('card')
 export class CardController {
-  private testImagePath =
-    '/home/atrathbone/dev/snail/backend/src/image-processing-assets/Testimg.jpg';
-
   constructor(
     private readonly cardService: CardService,
     private readonly usersService: UsersService,
@@ -68,7 +61,7 @@ export class CardController {
   @UseGuards(JwtAuthGuard)
   @Get()
   async listCards(@Res() res: Response) {
-    const cards = await this.cardService
+    await this.cardService
       .listCards()
       .then((cards) => {
         return res.status(HttpStatus.OK).json({

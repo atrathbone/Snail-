@@ -7,3 +7,7 @@
   margin-bottom: 10px;
 }
 
+.toggle {
+  color: blueviolet;
+  cursor: pointer;
+}

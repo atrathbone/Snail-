@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppConfigService } from '../../app-config.service';
-import { map, shareReplay } from 'rxjs';
+import { map, Observable, shareReplay } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Card } from '../Models/card.model';
 
@@ -20,6 +20,16 @@ export type NewCollection = {
   name: string;
   cards: string[];
   userId?: string;
+};
+
+export type UpdateCollection = {
+  userId?: string;
+  collectionId: string;
+  cards: string[];
+};
+
+export type GetUser = {
+  userId: string;
 };
 
 @Injectable({
@@ -57,9 +67,23 @@ export class ApiService {
     );
   }
 
+  public addToExistingCollection(updateCollection: UpdateCollection) {
+    const creatorId = this.authService.getCurrentUser();
+    updateCollection.userId = creatorId;
+    return this.httpClient.patch(
+      `${this.backendUrl}/users/collection`,
+      updateCollection
+    );
+  }
+
   public listCards() {
     return this.httpClient
       .get(`${this.backendUrl}/card`)
       .pipe(map((res: any) => res.data));
+  }
+
+  public getUser() {
+    const userId = this.authService.getCurrentUser();
+    return this.httpClient.get(`${this.backendUrl}/users/${userId}`);
   }
 }
