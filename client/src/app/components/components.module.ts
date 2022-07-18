@@ -23,6 +23,7 @@ import { AddToCollectionDialogComponent } from './add-to-collection-dialog/add-t
 import { ExistingCollectionsDialogComponent } from './existing-collections-dialog/existing-collections-dialog.component';
 import { MatListModule } from '@angular/material/list';
 import { CollectionsGridComponent } from './collections-grid/collections-grid.component';
+import { CardFanComponent } from './card-fan/card-fan.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { CollectionsGridComponent } from './collections-grid/collections-grid.co
     AddToCollectionDialogComponent,
     ExistingCollectionsDialogComponent,
     CollectionsGridComponent,
+    CardFanComponent,
   ],
   imports: [
     CommonModule,

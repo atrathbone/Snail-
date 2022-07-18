@@ -76,6 +76,15 @@ export class ApiService {
     );
   }
 
+  public removeFromCollection(updateCollection: UpdateCollection) {
+    const userId = this.authService.getCurrentUser();
+    updateCollection.userId = userId;
+    return this.httpClient.patch(
+      `${this.backendUrl}/users/collection/remove`,
+      updateCollection
+    );
+  }
+
   public getPopulatedCollections(){
     const userId = this.authService.getCurrentUser();
     return this.httpClient.get(`${this.backendUrl}/card/collection/${userId}`)

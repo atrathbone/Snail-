@@ -38,7 +38,6 @@ export class UsersController {
       });
   }
 
-
   @Post()
   async createUser(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
     await this.usersService
@@ -87,6 +86,26 @@ export class UsersController {
         return res
           .status(HttpStatus.OK)
           .json({ message: 'updated collection' });
+      })
+      .catch((error) => {
+        return res
+          .status(HttpStatus.BAD_REQUEST)
+          .json({ message: error.message });
+      });
+  }
+
+  @Patch('collection/remove')
+  @UseGuards(JwtAuthGuard)
+  async removeFromCollection(
+    @Body() updateCollectionDto: UpdateCollectionDto,
+    @Res() res: Response,
+  ) {
+    await this.usersService
+      .removeFromCollection(updateCollectionDto)
+      .then((updated) => {
+        return res
+          .status(HttpStatus.OK)
+          .json({ message: 'removed cards from collection', data: updated });
       })
       .catch((error) => {
         return res

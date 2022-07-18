@@ -96,6 +96,18 @@ export class UsersService {
       });
   }
 
+  async removeFromCollection(updateCollectionDto: UpdateCollectionDto) {
+    return this.userModel.updateOne(
+      {
+        _id: updateCollectionDto.userId,
+        'collections._id': updateCollectionDto.collectionId,
+      },
+      {
+        $pullAll: { 'collections.$.cards': updateCollectionDto.cards  },
+      },
+    );
+  }
+
   async findByUsername(username: string) {
     return await this.userModel.findOne({ username: username });
   }
