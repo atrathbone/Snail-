@@ -11,8 +11,11 @@ import { AuthService } from '../core/auth/auth.service';
 export class HomeComponent implements OnInit {
   public toggle = new Subject();
   public toggle$ = this.toggle.asObservable();
+  public loggedIn$ = this.authService.isLoggedIn$;
 
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
+
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     this.toggle$.subscribe(() => this.sidenav.toggle());

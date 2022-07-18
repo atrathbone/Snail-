@@ -1,0 +1,88 @@
+<ng-container *ngIf="!selected">
+  <mat-card>
+    <mat-card-content [style.overflow]="'auto'" [style.height.px]="'450'">
+      <mat-grid-list cols="3" rowHeight="1.5:1" [gutterSize]="'10px'">
+        <ng-container *ngFor="let collection of collections">
+          <mat-grid-tile (click)="select(collection)">
+            <div class="tile-content">
+              <app-card-fan [cards]="collection.cards"></app-card-fan>
+              <h3>{{ collection.name }}</h3>
+            </div>
+          </mat-grid-tile>
+        </ng-container>
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>
+</ng-container>
+<ng-container *ngIf="selected">
+  <h1>{{ selected.name }}</h1>
+  <div class="container">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 full">
+      <ng-container matColumnDef="imgUrl">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <img src="{{ element.imageUrl }}" alt="card" />
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef>Type</th>
+        <td mat-cell *matCellDef="let element">
+          {{
+            element.type === "BW"
+              ? "Black and White"
+              : (element.type | titlecase)
+          }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="suit">
+        <th mat-header-cell *matHeaderCellDef>Suit</th>
+        <td mat-cell *matCellDef="let element">
+          <img src="{{ lookup('SUIT', element.suit) }}" alt="suit" />
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="modifier">
+        <th mat-header-cell *matHeaderCellDef>Modifier</th>
+        <td mat-cell *matCellDef="let element">
+          <img src="{{ lookup('MODIFIER', element.modifier) }}" alt="suit" />
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="value">
+        <th mat-header-cell *matHeaderCellDef>Value</th>
+        <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+      </ng-container>
+      <ng-container matColumnDef="creator">
+        <th mat-header-cell *matHeaderCellDef>Creator</th>
+        <td mat-cell *matCellDef="let element">{{ element.creator }}</td>
+      </ng-container>
+      <ng-container matColumnDef="check">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox [(ngModel)]="checked[element._id]"></mat-checkbox>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+  <div class="bottom-controls">
+    <button mat-stroked-button (click)="onClickGoBack()">Go back</button>
+    <div class="right-filters">
+      <button
+        [disabled]="canRemove()"
+        mat-stroked-button
+        (click)="removeCards()"
+      >
+        Remove cards
+      </button>
+      <button
+        mat-stroked-button
+      >
+        Download Pdf
+      </button>
+    </div>
+  </div>
+</ng-container>

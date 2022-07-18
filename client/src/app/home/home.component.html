@@ -1,10 +1,9 @@
-div
 <mat-sidenav-container fullscreen>
   <mat-sidenav
     #sidenav
     mode="side"
     [fixedInViewport]="true"
-    [opened]="false"
+    [opened]="loggedIn$ | async"
     class="sidenav mat-elevation-z5"
   >
     <div class="side-nav-menu">
@@ -16,6 +15,9 @@ div
       </button>
       <button mat-menu-item routerLinkActive="active" routerLink="browsecards">
         <span>Browse cards</span>
+      </button>
+      <button mat-menu-item routerLinkActive="active" routerLink="collections">
+        <span>Collections</span>
       </button>
     </div>
   </mat-sidenav>

@@ -1,8 +1,25 @@
+mat-grid-tile {
+  background-color: aqua;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+mat-card {
+  background-color: plum;
+}
+
+.tile-content{
+  padding: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .full {
   width: 100%;
 }
 
-img {
+table img {
   width: 25px;
   margin: 5px;
 }
@@ -27,33 +44,18 @@ th {
   background-color: plum;
 }
 
-.mat-option img {
-  margin-top: 25px;
-}
-
-.filters {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 3px;
-}
-
-.left-filters {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  gap: 3px;
-}
-
-.right-filters {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-}
-
 .bottom-controls{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 10px;
 }
+
+.right-filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 3px;
+}
+
+

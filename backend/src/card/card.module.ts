@@ -8,8 +8,6 @@ import { CardImageGenService } from './card-image-gen/card-image-gen.service';
 import { ImageManipulationService } from './image-manipulation/image-manipulation.service';
 import { ImageUploadService } from './image-upload/image-upload.service';
 import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
-import { UsersService } from 'src/users/users.service';
-import { UsersController } from 'src/users/users.controller';
 import { UsersModule } from 'src/users/users.module';
 
 @Module({

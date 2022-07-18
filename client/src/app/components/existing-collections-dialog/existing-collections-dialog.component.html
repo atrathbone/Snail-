@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>
+  Add {{ cards.length }} card{{ cards.length > 1 ? "s" : "" }}
+  to existing collection
+</h1>
+
+<mat-dialog-content>
+  <mat-selection-list #collection [multiple]="false">
+    <mat-list-option
+      *ngFor="let collection of userCollections"
+      [value]="collection"
+    >
+      {{ collection.name }}
+    </mat-list-option>
+  </mat-selection-list>
+</mat-dialog-content>
+<button
+  (click)="addToCollection(collection.selectedOptions.selected[0]?.value.id)"
+  [disabled]="!collection.selectedOptions.selected[0]"
+  mat-stroked-button
+>
+  <mat-icon>add</mat-icon>
+  Add to
+  {{
+    collection.selectedOptions.selected[0]
+      ? collection.selectedOptions.selected[0]?.value.name
+      : "collection"
+  }}
+</button>

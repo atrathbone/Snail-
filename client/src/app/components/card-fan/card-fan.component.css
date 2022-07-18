@@ -1,0 +1,28 @@
+.card-container {
+  border: black solid 3px;
+  background-color: black;
+  border-radius: 5px;
+  transform: rotate(-15deg);
+}
+
+img {
+  display: block;
+  max-width: 50px;
+}
+
+.card-one {
+  transform: rotate(-10deg);
+}
+
+.card-two {
+  transform: rotate(15deg);
+}
+
+.card-three {
+  transform: rotate(40deg);
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}

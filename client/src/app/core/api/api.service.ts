@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppConfigService } from '../../app-config.service';
-import { map, shareReplay } from 'rxjs';
+import { map, Observable, shareReplay } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Card } from '../Models/card.model';
 
@@ -14,6 +14,22 @@ export type NewUser = {
 export type NewCard = {
   name: string;
   file: File;
+};
+
+export type NewCollection = {
+  name: string;
+  cards: string[];
+  userId?: string;
+};
+
+export type UpdateCollection = {
+  userId?: string;
+  collectionId: string;
+  cards: string[];
+};
+
+export type GetUser = {
+  userId: string;
 };
 
 @Injectable({
@@ -42,9 +58,46 @@ export class ApiService {
     return this.httpClient.post(`${this.backendUrl}/card`, formData);
   }
 
+  public addNewCollection(newCollection: NewCollection) {
+    const userId = this.authService.getCurrentUser();
+    newCollection.userId = userId;
+    return this.httpClient.post(
+      `${this.backendUrl}/users/collection`,
+      newCollection
+    );
+  }
+
+  public addToExistingCollection(updateCollection: UpdateCollection) {
+    const userId = this.authService.getCurrentUser();
+    updateCollection.userId = userId;
+    return this.httpClient.patch(
+      `${this.backendUrl}/users/collection`,
+      updateCollection
+    );
+  }
+
+  public removeFromCollection(updateCollection: UpdateCollection) {
+    const userId = this.authService.getCurrentUser();
+    updateCollection.userId = userId;
+    return this.httpClient.patch(
+      `${this.backendUrl}/users/collection/remove`,
+      updateCollection
+    );
+  }
+
+  public getPopulatedCollections(){
+    const userId = this.authService.getCurrentUser();
+    return this.httpClient.get(`${this.backendUrl}/card/collection/${userId}`)
+  }
+
   public listCards() {
     return this.httpClient
       .get(`${this.backendUrl}/card`)
       .pipe(map((res: any) => res.data));
+  }
+
+  public getUser() {
+    const userId = this.authService.getCurrentUser();
+    return this.httpClient.get(`${this.backendUrl}/users/${userId}`);
   }
 }

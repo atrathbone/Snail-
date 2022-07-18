@@ -1,0 +1,13 @@
+.container {
+  max-width: 300px;
+}
+
+.error {
+  font-size: smaller;
+  margin-bottom: 10px;
+}
+
+.toggle {
+  color: blueviolet;
+  cursor: pointer;
+}

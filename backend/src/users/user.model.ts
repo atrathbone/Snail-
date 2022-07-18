@@ -1,6 +1,17 @@
 import { Schema } from 'mongoose';
 import mongoose from 'mongoose';
 
+export const CollectionSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  cards: {
+    type: [String],
+    required: true,
+  },
+});
+
 export const UserSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -14,6 +25,11 @@ export const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  collections: {
+    type: [CollectionSchema],
+    required: false,
+    
+  },
   createdAt: {
     type: Date,
     required: true,
@@ -24,11 +40,18 @@ export const UserSchema = new mongoose.Schema({
   },
 });
 
+export interface ICollection {
+  id: string;
+  name: string;
+  cards: Array<string>;
+}
+
 export interface IUser {
   id: string;
   name: string;
   username: string;
   password: string;
+  collections?: ICollection[] 
   createdAt: Date;
   updatedAt: Date;
 }

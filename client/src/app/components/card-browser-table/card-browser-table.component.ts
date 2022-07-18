@@ -8,6 +8,7 @@ import { CardBrowserDialogComponent } from 'src/app/components/card-browser-dial
 import { FormControl, FormGroup } from '@angular/forms';
 import { typeofExpr } from '@angular/compiler/src/output/output_ast';
 import { combineLatest, startWith } from 'rxjs';
+import { AddToCollectionDialogComponent } from '../add-to-collection-dialog/add-to-collection-dialog.component';
 type DialogData = {
   imgUrl?: string;
 };
@@ -19,6 +20,7 @@ type Lookup = { [key: string]: string };
 })
 export class CardBrowserTableComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  public checked: { [key: string]: boolean } = {};
   public filterChips: string[] = [];
   public modifiers = new FormControl();
   public search = new FormControl();
@@ -46,6 +48,7 @@ export class CardBrowserTableComponent {
     'modifier',
     'value',
     'creator',
+    'check',
   ];
   public cards: Card[] = [];
 
@@ -94,6 +97,9 @@ export class CardBrowserTableComponent {
   constructor(private apiService: ApiService, public dialog: MatDialog) {
     this.apiService.listCards().subscribe((data) => {
       this.cards = data;
+      data.forEach((card: Card) => {
+        this.checked[card.id] = false;
+      });
       this.dataSource = new MatTableDataSource(this.cards);
       this.dataSource.paginator = this.paginator;
     });
@@ -112,7 +118,7 @@ export class CardBrowserTableComponent {
     }
   }
 
-  public openDialog(img: any) {
+  public openCardDialog(img: any) {
     const dialogRef = this.dialog.open(CardBrowserDialogComponent, {
       data: { imgUrl: img },
     });
@@ -135,6 +141,20 @@ export class CardBrowserTableComponent {
         break;
       case 'type':
         this.cardTypes.patchValue(undefined);
+    }
+  }
+
+  public addToCollection() {
+    const toCollect = Object.keys(this.checked).filter((k) => {
+      return this.checked[k] === true;
+    });
+    if (toCollect.length > 0) {
+      const dialogRef = this.dialog.open(AddToCollectionDialogComponent, {
+        data: { selectedCards: toCollect },
+      });
+      dialogRef.afterClosed().subscribe((result) => {
+        this.checked = {};
+      });
     }
   }
 }

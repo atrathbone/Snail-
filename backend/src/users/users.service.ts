@@ -1,19 +1,19 @@
-import {
-  BadRequestException,
-  Injectable,
-  Logger,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcryptjs';
 import { Model } from 'mongoose';
-import { IUser } from './user.model';
+import { ICollection, IUser } from './user.model';
 import { CreateUserDto } from './dto/create-user.dto';
+import { AddCollectionDto } from './dto/add-collection.dto';
+import { UpdateCollectionDto } from './dto/update-collection.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel('User') private readonly userModel: Model<IUser>) {}
+  constructor(
+    @InjectModel('User') private readonly userModel: Model<IUser>,
+    @InjectModel('Collection')
+    private readonly collectionModel: Model<ICollection>,
+  ) {}
 
   async createUser(createUserDto: CreateUserDto) {
     if (createUserDto.password.length < 8) {
@@ -51,12 +51,69 @@ export class UsersService {
       });
   }
 
+  async addCollection(addCollectionDto: AddCollectionDto) {
+    if (addCollectionDto.cards.length > 45) {
+      throw new HttpException(
+        'Collection exceeds maximum (45 cards)',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    const newCollection = await new this.collectionModel({
+      name: addCollectionDto.name,
+      cards: addCollectionDto.cards,
+    });
+    const updatedUser = await this.userModel.findByIdAndUpdate(
+      { _id: addCollectionDto.userId },
+      { $push: { collections: newCollection } },
+      { new: true },
+    );
+    return updatedUser.save().catch((err) => {
+      Logger.log(err);
+      throw new HttpException(
+        'Error adding collection',
+        HttpStatus.BAD_REQUEST,
+      );
+    });
+  }
+
+  async updateCollection(updateCollectionDto: UpdateCollectionDto) {
+    return await this.userModel
+      .updateOne(
+        {
+          _id: updateCollectionDto.userId,
+          'collections._id': updateCollectionDto.collectionId,
+        },
+        {
+          $addToSet: { 'collections.$.cards': updateCollectionDto.cards },
+        },
+      )
+      .catch((err) => {
+        Logger.log(err);
+        throw new HttpException(
+          'Error updating collection',
+          HttpStatus.BAD_REQUEST,
+        );
+      });
+  }
+
+  async removeFromCollection(updateCollectionDto: UpdateCollectionDto) {
+    return this.userModel.updateOne(
+      {
+        _id: updateCollectionDto.userId,
+        'collections._id': updateCollectionDto.collectionId,
+      },
+      {
+        $pullAll: { 'collections.$.cards': updateCollectionDto.cards  },
+      },
+    );
+  }
+
   async findByUsername(username: string) {
     return await this.userModel.findOne({ username: username });
   }
 
   async findByUserId(userId: string) {
-    return await this.userModel.findOne({ id: userId });
+    return await this.userModel.findById(userId);
   }
 
   async validatePassword(password: string, dBPassword: string) {

@@ -38,15 +38,13 @@
         />
         <mat-card-content>{{ file?.name }}</mat-card-content>
       </form>
-      <mat-card-actions>
-        <button
-          (click)="uploadFile()"
-          mat-stroked-button
-          [disabled]="!file || !form.valid"
-        >
-          Generate card
-        </button>
-      </mat-card-actions>
+      <button
+        (click)="uploadFile()"
+        mat-stroked-button
+        [disabled]="!file || !form.valid"
+      >
+        Generate card
+      </button>
     </ng-container>
   </mat-card>
 </div>
