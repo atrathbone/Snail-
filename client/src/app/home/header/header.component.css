@@ -2,13 +2,26 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
-  padding: 15px 0;
 }
 
-.logout{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    width: 100%;
+.logout {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+button {
+  max-height: 30px;
+}
+
+.title {
+  max-height: 50px;
+}
+
+.toggle-snail img {
+  max-height: 50px;
+  cursor: pointer;
 }
