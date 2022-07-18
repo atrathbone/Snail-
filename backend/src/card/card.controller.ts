@@ -7,6 +7,7 @@ import {
   UseGuards,
   UseInterceptors,
   UploadedFile,
+  Param,
 } from '@nestjs/common';
 import * as Jimp from 'jimp';
 import { Res } from '@nestjs/common';
@@ -55,6 +56,27 @@ export class CardController {
         return res.status(HttpStatus.OK).json({
           message: error.message,
         });
+      });
+  }
+
+  @Get('/collection/:id')
+  @UseGuards(JwtAuthGuard)
+  async getPopulatedCollections(
+    @Param('id') userId: string,
+    @Res() res: Response,
+  ) {
+    const user = await this.usersService.findByUserId(userId);
+    await this.cardService
+      .getPopulatedCollections(user)
+      .then((collections) => {
+        return res
+          .status(HttpStatus.OK)
+          .json({ message: 'populated collection success', data: collections });
+      })
+      .catch((error) => {
+        return res
+          .status(HttpStatus.BAD_REQUEST)
+          .json({ message: error.message });
       });
   }
 

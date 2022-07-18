@@ -16,6 +16,7 @@ import { CardDataGenService } from './card-data-gen/card-data-gen.service';
 import { CardImageGenService } from './card-image-gen/card-image-gen.service';
 import * as Jimp from 'jimp';
 import { ImageUploadService } from './image-upload/image-upload.service';
+import { IUser } from 'src/users/user.model';
 
 @Injectable()
 export class CardService {
@@ -46,8 +47,29 @@ export class CardService {
     });
   }
 
-  async listCards(){
-    return await this.cardModel.find({}).exec()
+  async getCollection(cardsArray: string[]) {
+    return await this.cardModel.find({
+      _id: {
+        $in: cardsArray,
+      },
+    });
+  }
+
+  async getPopulatedCollections(user: IUser) {
+    const populated = [];
+    for (let collection of user.collections) {
+      const populatedCards = await this.getCollection(collection.cards);
+      populated.push({
+        id: collection.id,
+        name: collection.name,
+        cards: populatedCards,
+      });
+    }
+    return populated;
+  }
+
+  async listCards() {
+    return await this.cardModel.find({}).exec();
   }
 
   private async upload(img: Jimp) {

@@ -1,0 +1,13 @@
+<div>
+  <mat-card>
+    <mat-card-content [style.overflow]="'auto'" [style.height.px]="'450'">
+      <mat-grid-list cols="3" rowHeight="1.5:1" [gutterSize]="'10px'">
+        <ng-container *ngFor="let collection of collections">
+          <mat-grid-tile>
+            <h2>{{ collection.name }}</h2>
+          </mat-grid-tile>
+        </ng-container>
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>
+</div>

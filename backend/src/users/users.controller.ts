@@ -27,7 +27,7 @@ export class UsersController {
     await this.usersService
       .findByUserId(userId)
       .then((user) => {
-        return res 
+        return res
           .status(HttpStatus.OK)
           .json({ message: 'user found', data: UserDto.fromEntity(user) });
       })
@@ -37,6 +37,7 @@ export class UsersController {
           .json({ message: error.message });
       });
   }
+
 
   @Post()
   async createUser(@Body() createUserDto: CreateUserDto, @Res() res: Response) {

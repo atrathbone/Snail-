@@ -22,6 +22,7 @@ import { FormsModule } from '@angular/forms';
 import { AddToCollectionDialogComponent } from './add-to-collection-dialog/add-to-collection-dialog.component';
 import { ExistingCollectionsDialogComponent } from './existing-collections-dialog/existing-collections-dialog.component';
 import { MatListModule } from '@angular/material/list';
+import { CollectionsGridComponent } from './collections-grid/collections-grid.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { MatListModule } from '@angular/material/list';
     CardBrowserDialogComponent,
     AddToCollectionDialogComponent,
     ExistingCollectionsDialogComponent,
+    CollectionsGridComponent,
   ],
   imports: [
     CommonModule,
@@ -56,6 +58,7 @@ import { MatListModule } from '@angular/material/list';
     CardGenComponent,
     CardBrowserTableComponent,
     CardBrowserDialogComponent,
+    CollectionsGridComponent,
   ],
 })
 export class ComponentsModule {}

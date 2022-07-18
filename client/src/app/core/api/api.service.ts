@@ -59,8 +59,8 @@ export class ApiService {
   }
 
   public addNewCollection(newCollection: NewCollection) {
-    const creatorId = this.authService.getCurrentUser();
-    newCollection.userId = creatorId;
+    const userId = this.authService.getCurrentUser();
+    newCollection.userId = userId;
     return this.httpClient.post(
       `${this.backendUrl}/users/collection`,
       newCollection
@@ -68,12 +68,17 @@ export class ApiService {
   }
 
   public addToExistingCollection(updateCollection: UpdateCollection) {
-    const creatorId = this.authService.getCurrentUser();
-    updateCollection.userId = creatorId;
+    const userId = this.authService.getCurrentUser();
+    updateCollection.userId = userId;
     return this.httpClient.patch(
       `${this.backendUrl}/users/collection`,
       updateCollection
     );
+  }
+
+  public getPopulatedCollections(){
+    const userId = this.authService.getCurrentUser();
+    return this.httpClient.get(`${this.backendUrl}/card/collection/${userId}`)
   }
 
   public listCards() {

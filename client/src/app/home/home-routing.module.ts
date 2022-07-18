@@ -6,6 +6,7 @@ import { AuthGuard } from '../core/auth/auth.guard';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { CreateCardComponent } from '../pages/create-card/create-card.component';
 import { BrowseCardsComponent } from '../pages/browse-cards/browse-cards.component';
+import { CollectionsComponent } from '../pages/collections/collections.component';
 const routes: Routes = [
   {
     path: '',
@@ -26,6 +27,11 @@ const routes: Routes = [
       {
         path: 'browsecards',
         component: BrowseCardsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'collections',
+        component: CollectionsComponent,
         canActivate: [AuthGuard],
       },
     ],
