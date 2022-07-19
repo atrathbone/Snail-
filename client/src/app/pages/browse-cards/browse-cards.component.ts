@@ -7,6 +7,4 @@ import { ApiService } from 'src/app/core/api/api.service';
   templateUrl: './browse-cards.component.html',
   styleUrls: ['./browse-cards.component.css'],
 })
-export class BrowseCardsComponent {
- 
-}
+export class BrowseCardsComponent {}

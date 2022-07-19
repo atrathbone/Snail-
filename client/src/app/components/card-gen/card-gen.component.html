@@ -9,7 +9,10 @@
       </mat-card-actions>
     </ng-container>
     <ng-container *ngIf="isLoading">
-      <h1>LOADING LOL</h1>
+      <div class="loading">
+        <img src="assets/images/illustrations/PLEASEWAIT.png" alt="wait" />
+        <p>Please wait ...</p>
+      </div>
     </ng-container>
     <ng-container *ngIf="!isLoading && !card">
       <mat-card-title>Create a card</mat-card-title>
@@ -38,13 +41,16 @@
         />
         <mat-card-content>{{ file?.name }}</mat-card-content>
       </form>
-      <button
-        (click)="uploadFile()"
-        mat-stroked-button
-        [disabled]="!file || !form.valid"
-      >
-        Generate card
-      </button>
+      <div class="image-button-container">
+        <button
+          (click)="uploadFile()"
+          mat-stroked-button
+          [disabled]="!file || !form.valid"
+        >
+          Generate card
+        </button>
+        <img src="assets/images/illustrations/CREATE.png" alt="creative" />
+      </div>
     </ng-container>
   </mat-card>
 </div>

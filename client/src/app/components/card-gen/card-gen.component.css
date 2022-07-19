@@ -6,3 +6,25 @@
   font-size: smaller;
   margin-bottom: 10px;
 }
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loading img {
+  width: 200px;
+}
+
+.image-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+img {
+  max-width: 100px;
+}

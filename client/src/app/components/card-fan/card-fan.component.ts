@@ -10,6 +10,8 @@ import { PopulatedCollection } from 'src/app/core/Models/user.model';
 export class CardFanComponent implements OnInit {
   @Input()
   public cards!: Card[];
+  @Input()
+  public large = false;
   public cardUrls: string[] = [];
   public loaded = false;
 
