@@ -11,7 +11,7 @@
     <ng-container *ngIf="isLoading">
       <div class="loading">
         <img src="assets/images/illustrations/PLEASEWAIT.png" alt="wait" />
-        <p>Please wait ...</p>
+        <marquee scrolldelay="50" width="100%"> please wait... </marquee>
       </div>
     </ng-container>
     <ng-container *ngIf="!isLoading && !card">

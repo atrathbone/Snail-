@@ -19,12 +19,15 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guards';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 import { UsersService } from 'src/users/users.service';
+import { CardDownloadDto } from './dto/card-download.dto';
+import { CardArchiveService } from './card-archive/card-archive.service';
 
 @Controller('card')
 export class CardController {
   constructor(
     private readonly cardService: CardService,
     private readonly usersService: UsersService,
+    private readonly cardArchiveService: CardArchiveService,
   ) {}
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('imgFile'))
@@ -72,6 +75,26 @@ export class CardController {
         return res
           .status(HttpStatus.OK)
           .json({ message: 'populated collection success', data: collections });
+      })
+      .catch((error) => {
+        return res
+          .status(HttpStatus.BAD_REQUEST)
+          .json({ message: error.message });
+      });
+  }
+
+  @Post('/download')
+  @UseGuards(JwtAuthGuard)
+  async getDownload(
+    @Body() cardDownloadDto: CardDownloadDto,
+    @Res() res: Response,
+  ) {
+    await this.cardArchiveService
+      .generateFile(cardDownloadDto.cards)
+      .then((file) => {
+        return res
+          .status(HttpStatus.OK)
+          .json({ message: 'file generated', data: file });
       })
       .catch((error) => {
         return res

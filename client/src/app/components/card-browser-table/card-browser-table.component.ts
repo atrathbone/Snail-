@@ -5,13 +5,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ApiService } from 'src/app/core/api/api.service';
 import { Card } from 'src/app/core/Models/card.model';
 import { CardBrowserDialogComponent } from 'src/app/components/card-browser-dialog/card-browser-dialog.component';
-import { FormControl, FormGroup } from '@angular/forms';
-import { typeofExpr } from '@angular/compiler/src/output/output_ast';
+import { FormControl } from '@angular/forms';
 import { combineLatest, startWith } from 'rxjs';
 import { AddToCollectionDialogComponent } from '../add-to-collection-dialog/add-to-collection-dialog.component';
-type DialogData = {
-  imgUrl?: string;
-};
+
 type Lookup = { [key: string]: string };
 @Component({
   selector: 'app-card-browser-table',

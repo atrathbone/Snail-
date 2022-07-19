@@ -19,6 +19,19 @@ export class ImageManipulationService {
     });
   }
 
+  createFile(image: Jimp) {
+    return new Promise((resolve, reject) => {
+      image
+        .getBase64Async(Jimp.MIME_JPEG)
+        .then((file) => {
+          resolve(file);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
+
   loadFromPath(path: string): Promise<Jimp> {
     return new Promise((resolve, reject) => {
       Jimp.read(path)

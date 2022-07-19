@@ -86,7 +86,7 @@
       >
         Remove cards
       </button>
-      <button mat-stroked-button>Download Pdf</button>
+      <button (click)="downloadSheet()" [disabled]="!canDownload()" mat-stroked-button>Download sheet</button>
     </div>
   </div>
 </ng-container>

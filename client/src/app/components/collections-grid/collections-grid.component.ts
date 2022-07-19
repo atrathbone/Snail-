@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
 import { ApiService } from 'src/app/core/api/api.service';
 import { Card } from 'src/app/core/Models/card.model';
 import { PopulatedCollection } from 'src/app/core/Models/user.model';
+import { DownloadDialogComponent } from '../download-dialog/download-dialog.component';
 
 type Lookup = { [key: string]: string };
 
@@ -14,6 +16,7 @@ type Lookup = { [key: string]: string };
   styleUrls: ['./collections-grid.component.css'],
 })
 export class CollectionsGridComponent implements OnInit {
+  public downloadList!: string[];
   public collections: PopulatedCollection[] = [];
   public selected: PopulatedCollection | undefined = undefined;
   public checked: { [key: string]: boolean } = {};
@@ -41,7 +44,11 @@ export class CollectionsGridComponent implements OnInit {
     SUN: 'assets/images/small modifiers/SUNMOD.png',
     NONE: 'assets/images/small modifiers/NONE.png',
   };
-  constructor(private apiService: ApiService, private router: Router) {}
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.refreshData();
@@ -65,6 +72,19 @@ export class CollectionsGridComponent implements OnInit {
     } else {
       return '';
     }
+  }
+
+  downloadSheet() {
+    const cardsToDownload = Object.keys(this.checked).filter((k) => {
+      return this.checked[k] === true;
+    });
+
+    const dialogRef = this.dialog.open(DownloadDialogComponent, {
+      data: { cards: cardsToDownload },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      this.checked = {};
+    });
   }
 
   public removeCards() {
@@ -109,6 +129,13 @@ export class CollectionsGridComponent implements OnInit {
       this.selected?.cards.length! - markedToRemove.length <= 0 ||
       markedToRemove.length === 0
     );
+  }
+
+  public canDownload() {
+    const markedToDownload = Object.keys(this.checked).filter((k) => {
+      return this.checked[k] === true;
+    });
+    return markedToDownload.length <= 9 && markedToDownload.length > 0;
   }
 
   public onClickGoBack() {

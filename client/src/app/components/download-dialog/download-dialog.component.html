@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Generate printable sheet</h1>
+<button
+  [disabled]="isLoading || !data.cards"
+  (click)="generate()"
+  mat-stroked-button
+>
+  Generate sheet
+</button>
+<div class="generation">
+  <div class="img-container">
+    <ng-container *ngIf="!file && isLoading">
+      <div class="loading">
+        <img src="assets/images/illustrations/PLEASEWAIT.png" alt="wait" />
+        <marquee scrolldelay="50" width="100%"> please wait... </marquee>
+      </div>
+    </ng-container>
+  </div>
+  <a download="snail-sheet.jpg" [disabled]="!file" mat-stroked-button [href]="file">Download</a>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</div>

@@ -10,7 +10,7 @@ export class CardArchiveService {
     private cardService: CardService,
   ) {}
 
-  public generatePageImage(cards: Jimp[]): Promise<Jimp> {
+  private generatePageImage(cards: Jimp[]): Promise<Jimp> {
     return new Promise((resolve, reject) => {
       this.imageManipulator
         .loadFromPath('src/image-processing-assets/blank.jpg')
@@ -64,22 +64,13 @@ export class CardArchiveService {
     });
   }
 
-  public async generatePdf(cardIds: string[]) {
-    let idPages: any[] = [];
-    let pages: Jimp[] = [];
-    for (let i = 0; i < cardIds.length; i += 9) {
-      const page = cardIds.slice(i, i + 9);
-      idPages.push(page);
-    }
-    for (let page of idPages) {
-      const images = await this.getCardImages(page);
+  public async generateFile(cardIds: string[]) {
+      const images = await this.getCardImages(cardIds);
       const pageImg = await this.generatePageImage(images);
-      pages.push(pageImg);
-    }
-    //save images and put them in a pdf
+      return await this.imageManipulator.createFile(pageImg)
   }
 
-  public async getCardImages(cardIds: string[]) {
+  private async getCardImages(cardIds: string[]) {
     const paths = (await this.cardService.populateCards(cardIds)).map(
       (card) => {
         return card.imageUrl;
