@@ -57,61 +57,62 @@ export class CardImageGenService {
 
   generateCardImage(cardImage: Jimp, cardData: CardDataDto): Promise<Jimp> {
     return new Promise((resolve, reject) => {
-      this.loadFromPaths(cardData).then((loadedImages) => {
-        this.imageManipulator
-          .overlay(loadedImages.cardType, loadedImages.suitType)
-          .then((cardPlusSuit) => {
-            this.imageManipulator
-              .overlay(cardPlusSuit, loadedImages.modifierType)
-              .then((cardPlusSuitPlusMod) => {
-                this.imageManipulator
-                  .overlay(cardPlusSuitPlusMod, loadedImages.valueType)
-                  .then((cardPLusSuitPlusModPlusVal) => {
-                    this.imageManipulator
-                      .processUploadedImage(cardImage)
-                      .then((processedImg) => {
-                        this.imageManipulator
-                          .overlay(
-                            cardPLusSuitPlusModPlusVal,
-                            processedImg,
-                            147,
-                            215,
-                          )
-                          .then((cardPlusSuitPlusModPlusValPlusMain) => {
-                            this.imageManipulator
-                              .addText(
-                                cardPlusSuitPlusModPlusValPlusMain,
-                                this.fontPaths.name,
-                                cardData.name,
-                                150,
-                                915,
-                              )
-                              .then(
-                                (
-                                  cardPlusSuitPlusModPlusValPlusMainPlusNametxt,
-                                ) => {
-                                  this.imageManipulator
-                                    .addText(
-                                      cardPlusSuitPlusModPlusValPlusMainPlusNametxt,
-                                      this.fontPaths.creator,
-                                      cardData.creator,
-                                      470,
-                                      1005,
-                                    )
-                                    .then((compositeCard) => {
-                                      resolve(compositeCard);
-                                    });
-                                },
-                              );
-                          });
-                      });
-                  });
-              });
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      });
+      this.loadFromPaths(cardData)
+        .then((loadedImages) => {
+          this.imageManipulator
+            .overlay(loadedImages.cardType, loadedImages.suitType)
+            .then((cardPlusSuit) => {
+              this.imageManipulator
+                .overlay(cardPlusSuit, loadedImages.modifierType)
+                .then((cardPlusSuitPlusMod) => {
+                  this.imageManipulator
+                    .overlay(cardPlusSuitPlusMod, loadedImages.valueType)
+                    .then((cardPLusSuitPlusModPlusVal) => {
+                      this.imageManipulator
+                        .processUploadedImage(cardImage)
+                        .then((processedImg) => {
+                          this.imageManipulator
+                            .overlay(
+                              cardPLusSuitPlusModPlusVal,
+                              processedImg,
+                              147,
+                              215,
+                            )
+                            .then((cardPlusSuitPlusModPlusValPlusMain) => {
+                              this.imageManipulator
+                                .addText(
+                                  cardPlusSuitPlusModPlusValPlusMain,
+                                  this.fontPaths.name,
+                                  cardData.name,
+                                  150,
+                                  915,
+                                )
+                                .then(
+                                  (
+                                    cardPlusSuitPlusModPlusValPlusMainPlusNametxt,
+                                  ) => {
+                                    this.imageManipulator
+                                      .addText(
+                                        cardPlusSuitPlusModPlusValPlusMainPlusNametxt,
+                                        this.fontPaths.creator,
+                                        cardData.creator,
+                                        470,
+                                        1005,
+                                      )
+                                      .then((compositeCard) => {
+                                        resolve(compositeCard);
+                                      });
+                                  },
+                                );
+                            });
+                        });
+                    });
+                });
+            });
+        })
+        .catch((err) => {
+          reject(err);
+        });
     });
   }
 

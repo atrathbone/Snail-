@@ -47,7 +47,7 @@ export class CardService {
     });
   }
 
-  async getCollection(cardsArray: string[]) {
+  async populateCards(cardsArray: string[]) {
     return await this.cardModel.find({
       _id: {
         $in: cardsArray,
@@ -58,7 +58,7 @@ export class CardService {
   async getPopulatedCollections(user: IUser) {
     const populated = [];
     for (let collection of user.collections) {
-      const populatedCards = await this.getCollection(collection.cards);
+      const populatedCards = await this.populateCards(collection.cards);
       populated.push({
         id: collection.id,
         name: collection.name,

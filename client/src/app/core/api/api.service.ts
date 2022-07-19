@@ -11,6 +11,10 @@ export type NewUser = {
   password: string;
 };
 
+export type GenerateDownload = {
+  cards: string[];
+};
+
 export type NewCard = {
   name: string;
   file: File;
@@ -85,9 +89,9 @@ export class ApiService {
     );
   }
 
-  public getPopulatedCollections(){
+  public getPopulatedCollections() {
     const userId = this.authService.getCurrentUser();
-    return this.httpClient.get(`${this.backendUrl}/card/collection/${userId}`)
+    return this.httpClient.get(`${this.backendUrl}/card/collection/${userId}`);
   }
 
   public listCards() {
@@ -99,5 +103,9 @@ export class ApiService {
   public getUser() {
     const userId = this.authService.getCurrentUser();
     return this.httpClient.get(`${this.backendUrl}/users/${userId}`);
+  }
+
+  public generateDownload(generateDownload: GenerateDownload) {
+    return this.httpClient.post(`${this.backendUrl}/card/download`, generateDownload);
   }
 }

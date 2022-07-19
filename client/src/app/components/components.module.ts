@@ -25,6 +25,7 @@ import { MatListModule } from '@angular/material/list';
 import { CollectionsGridComponent } from './collections-grid/collections-grid.component';
 import { CardFanComponent } from './card-fan/card-fan.component';
 import { DashboardDisplayComponent } from './dashboard-display/dashboard-display.component';
+import { DownloadDialogComponent } from './download-dialog/download-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { DashboardDisplayComponent } from './dashboard-display/dashboard-display
     CollectionsGridComponent,
     CardFanComponent,
     DashboardDisplayComponent,
+    DownloadDialogComponent,
   ],
   imports: [
     CommonModule,

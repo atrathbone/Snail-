@@ -9,6 +9,7 @@ import { ImageManipulationService } from './image-manipulation/image-manipulatio
 import { ImageUploadService } from './image-upload/image-upload.service';
 import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
 import { UsersModule } from 'src/users/users.module';
+import { CardArchiveService } from './card-archive/card-archive.service';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { UsersModule } from 'src/users/users.module';
     CardImageGenService,
     ImageManipulationService,
     ImageUploadService,
+    CardArchiveService,
   ],
 })
 export class CardModule {}
