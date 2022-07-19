@@ -6,7 +6,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CreateCardComponent } from './create-card/create-card.component';
 import { BrowseCardsComponent } from './browse-cards/browse-cards.component';
 import { CollectionsComponent } from './collections/collections.component';
-import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -16,7 +15,7 @@ import { MatCardModule } from '@angular/material/card';
     BrowseCardsComponent,
     CollectionsComponent,
   ],
-  imports: [CommonModule, ComponentsModule, MatCardModule],
+  imports: [CommonModule, ComponentsModule],
   exports: [AuthComponent],
 })
 export class PagesModule {}

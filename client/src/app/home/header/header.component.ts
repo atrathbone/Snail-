@@ -19,6 +19,12 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  toggleSideBar() {
+    if (this.isLoggedIn) {
+      this.toggle.emit();
+    }
+  }
+
   public logOut() {
     this.authService.logout();
     this.router.navigate(['/auth']);

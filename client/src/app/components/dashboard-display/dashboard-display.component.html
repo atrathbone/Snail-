@@ -1,0 +1,44 @@
+<mat-card>
+  <mat-card-content [style.overflow]="'auto'" [style.height.px]="'450'">
+    <mat-grid-list cols="2" rowHeight="220px" [gutterSize]="'10px'">
+      <mat-grid-tile colspan="1" rowspan="2" class="cards">
+        <div class="content">
+          <div *ngIf="cards && cards.length > 0">
+            <app-card-fan [large]="true" [cards]="cards"></app-card-fan>
+          </div>
+          <button (click)="navigate('createcard')" mat-stroked-button>
+            Create cards
+          </button>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile class="welcome">
+        <div class="content">
+          <h3>Welcome {{ user ? user.name : "" }}</h3>
+          <button (click)="navigate('collections')" mat-stroked-button>
+            Browse your collections
+          </button>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="about">
+          <h3>What is Snail?</h3>
+          <div class="blurb">
+            <img src="assets/images/illustrations/CREATE.png" alt="create" />
+            <div class="scrolls">
+              <marquee scrolldelay="150" bgcolor="#00ffff" width="100%">
+                Snail is a card game in which the cards are randomly generated
+                using images uploaded by you! Each card has attributes which are
+                generated at random, based on a number of secret factors.
+              </marquee>
+              <marquee bgcolor="#dda0dd" scrolldelay="200" width="100%">
+                There is no set rule system for Snail. The cards are intended as
+                an intriguing starting point for you to come up with your own
+                games, or just have fun creating random cards.
+              </marquee>
+            </div>
+          </div>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>

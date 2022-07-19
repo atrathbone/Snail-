@@ -8,7 +8,7 @@ mat-card {
   background-color: plum;
 }
 
-.tile-content{
+.tile-content {
   padding: 3px;
   display: flex;
   flex-direction: column;
@@ -44,7 +44,7 @@ th {
   background-color: plum;
 }
 
-.bottom-controls{
+.bottom-controls {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -57,5 +57,3 @@ th {
   justify-content: flex-end;
   gap: 3px;
 }
-
-

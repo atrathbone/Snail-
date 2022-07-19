@@ -1,19 +1,24 @@
-<div class="container" *ngIf="cardUrls">
-  <div [ngClass]="{ 'card-container': loaded }" class="card-one">
-    <img (load)="imgLoaded()" [src]="cardUrls[0]" alt="card" />
-  </div>
-  <div
-    *ngIf="cardUrls[1]"
-    [ngClass]="{ 'card-container': loaded }"
-    class="card-two"
-  >
-    <img (load)="imgLoaded()" [src]="cardUrls[1]" alt="card" />
-  </div>
-  <div
-    *ngIf="cardUrls[2]"
-    [ngClass]="{ 'card-container': loaded }"
-    class="card-three"
-  >
-    <img (load)="imgLoaded()" [src]="cardUrls[2]" alt="card" />
+<div [ngClass]="{
+  'small': !large,
+  'large': large
+}">
+  <div class="container" *ngIf="cardUrls">
+    <div [ngClass]="{ 'card-container': loaded }" class="card-one">
+      <img (load)="imgLoaded()" [src]="cardUrls[0]" alt="card" />
+    </div>
+    <div
+      *ngIf="cardUrls[1]"
+      [ngClass]="{ 'card-container': loaded }"
+      class="card-two"
+    >
+      <img (load)="imgLoaded()" [src]="cardUrls[1]" alt="card" />
+    </div>
+    <div
+      *ngIf="cardUrls[2]"
+      [ngClass]="{ 'card-container': loaded }"
+      class="card-three"
+    >
+      <img (load)="imgLoaded()" [src]="cardUrls[2]" alt="card" />
+    </div>
   </div>
 </div>
