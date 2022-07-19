@@ -1,21 +1,29 @@
 <ng-container *ngIf="!selected">
   <mat-card>
-    <mat-card-content [style.overflow]="'auto'" [style.height.px]="'450'">
-      <mat-grid-list cols="3" rowHeight="1.5:1" [gutterSize]="'10px'">
-        <ng-container *ngFor="let collection of collections">
-          <mat-grid-tile (click)="select(collection)">
-            <div class="tile-content">
-              <app-card-fan [cards]="collection.cards"></app-card-fan>
-              <h3>{{ collection.name }}</h3>
-            </div>
-          </mat-grid-tile>
-        </ng-container>
-      </mat-grid-list>
-    </mat-card-content>
+    <ng-container *ngIf="!collections || collections.length === 0">
+      <h3>You have no collections.</h3>
+      <button (click)="navigate('browsecards')" mat-stroked-button>
+        Browse cards
+      </button>
+    </ng-container>
+    <ng-container *ngIf="collections && collections.length >= 1">
+      <mat-card-content [style.overflow]="'auto'" [style.height.px]="'450'">
+        <mat-grid-list cols="3" rowHeight="1.5:1" [gutterSize]="'10px'">
+          <ng-container *ngFor="let collection of collections">
+            <mat-grid-tile (click)="select(collection)">
+              <div class="tile-content">
+                <app-card-fan [cards]="collection.cards"></app-card-fan>
+                <h3>{{ collection.name }}</h3>
+              </div>
+            </mat-grid-tile>
+          </ng-container>
+        </mat-grid-list>
+      </mat-card-content>
+    </ng-container>
   </mat-card>
 </ng-container>
 <ng-container *ngIf="selected">
-  <h1>{{ selected.name }}</h1>
+  <h3>{{ selected.name }}</h3>
   <div class="container">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 full">
       <ng-container matColumnDef="imgUrl">
@@ -78,11 +86,7 @@
       >
         Remove cards
       </button>
-      <button
-        mat-stroked-button
-      >
-        Download Pdf
-      </button>
+      <button mat-stroked-button>Download Pdf</button>
     </div>
   </div>
 </ng-container>

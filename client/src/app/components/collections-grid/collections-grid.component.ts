@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { map } from 'rxjs';
 import { ApiService } from 'src/app/core/api/api.service';
 import { Card } from 'src/app/core/Models/card.model';
@@ -40,10 +41,14 @@ export class CollectionsGridComponent implements OnInit {
     SUN: 'assets/images/small modifiers/SUNMOD.png',
     NONE: 'assets/images/small modifiers/NONE.png',
   };
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit(): void {
     this.refreshData();
+  }
+
+  public navigate(to: string) {
+    this.router.navigate([to]);
   }
 
   public select(collection: any) {

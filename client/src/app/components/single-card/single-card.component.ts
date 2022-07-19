@@ -5,14 +5,10 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './single-card.component.html',
   styleUrls: ['./single-card.component.css'],
 })
-export class SingleCardComponent implements OnInit {
+export class SingleCardComponent {
   @Input()
   public cardUrl: string | undefined;
   public loaded = false;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   public imgLoaded() {
     this.loaded = true;

@@ -8,7 +8,7 @@ import { Card } from 'src/app/core/Models/card.model';
   templateUrl: './card-gen.component.html',
   styleUrls: ['./card-gen.component.css'],
 })
-export class CardGenComponent implements OnInit {
+export class CardGenComponent {
   public card: any = undefined;
   public cantCreate = false;
   public isLoading = false;
@@ -21,8 +21,6 @@ export class CardGenComponent implements OnInit {
   });
 
   constructor(private apiService: ApiService) {}
-
-  ngOnInit(): void {}
 
   public setFile(event: any) {
     if (event.target.files[0]) {
