@@ -1,5 +1,5 @@
 {
     "scripts": {
-      "start": "cd backend && npm run start"
+      "start":  "sh -c 'cd backend && npm run start:prod'"
     }
   }
